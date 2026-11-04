@@ -130,10 +130,17 @@
   "upcoming": [
     {
       "area": "software",
-      "when": "Fri 6 Nov",
+      "when": "Fri 13 Nov",
       "status": "in progress",
       "title": "Costing web app, first version",
       "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load."
+    },
+    {
+      "area": "analytics",
+      "when": "This week",
+      "status": "in progress",
+      "title": "Demand projection model: new logic",
+      "detail": "Reworking the projection model: base daily rate from a 30/60-day blend, per-channel growth, and checking the safety-stock Z-score against past months."
     },
     {
       "area": "analytics",
