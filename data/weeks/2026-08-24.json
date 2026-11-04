@@ -1,0 +1,57 @@
+{
+  "start": "2026-08-24",
+  "end": "2026-08-30",
+  "headline": "Shopify, Clickpost and Metabase come online",
+  "stats": [
+    {
+      "label": "sources syncing",
+      "value": "3"
+    },
+    {
+      "label": "Shopify tables loaded",
+      "value": "7"
+    },
+    {
+      "label": "BI tool live",
+      "value": "1"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "engineering",
+      "title": "Shopify order sync",
+      "detail": "Orders, line items, fulfilments, customers and discounts, with a full historical backfill.",
+      "date": "2026-08-27"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Clickpost shipment sync",
+      "detail": "Courier tracking data starts landing next to orders.",
+      "date": "2026-08-24"
+    },
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Metabase launched",
+      "detail": "Self-hosted dashboards on our own data, with a read-only database user for BI.",
+      "date": "2026-08-25"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Shared Terraform state",
+      "detail": "Infrastructure state moved to encrypted S3 with a lock, so changes can never collide.",
+      "date": "2026-08-24"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Shopify backfill survives network errors",
+      "detail": "Retries on network and server errors fixed a crash during the big backfill.",
+      "date": "2026-08-27"
+    }
+  ],
+  "upcoming": []
+}

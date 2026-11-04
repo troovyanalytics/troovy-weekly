@@ -1,0 +1,78 @@
+{
+  "start": "2026-10-12",
+  "end": "2026-10-18",
+  "headline": "The first pipelines move to serverless",
+  "stats": [
+    {
+      "label": "pipelines live on Fargate",
+      "value": "2"
+    },
+    {
+      "label": "fixed IP allowlisted in Unicommerce",
+      "value": "1"
+    },
+    {
+      "label": "courier scoring versions shipped",
+      "value": "3"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "engineering",
+      "title": "uniware-sync runs on ECS Fargate",
+      "detail": "Our biggest pipeline left its server. It now runs as a scheduled container behind a fixed IP that Unicommerce allowlists.",
+      "date": "2026-10-15"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "meta-sync live on Fargate",
+      "detail": "Meta Ads spend and insights for both ad accounts load daily, with no NAT cost.",
+      "date": "2026-10-16"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Sajid's invoice pipeline deployed",
+      "detail": "Sajid Ali's Unicommerce invoice sync now runs inside our dbt staging and reporting layers, rebuilt every day.",
+      "date": "2026-10-14"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "B2B dashboards by Sajid",
+      "detail": "Sajid built 4 B2B dashboards on top of it in Metabase: stuck invoices, master inventory, fill rate and daily run rate.",
+      "date": "2026-10-16"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Landing zone for raw API data",
+      "detail": "Every raw Unicommerce response is kept in S3 and moves to cheaper storage tiers after 30 and 180 days.",
+      "date": "2026-10-15"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Courier scoring v2 and v3",
+      "detail": "Shadowfax and marketplace couriers added, with a courier-level prior for scoring.",
+      "date": "2026-10-13"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Data quality checks",
+      "detail": "Fixed the Flipkart test and added a check for partial Unicommerce loads.",
+      "date": "2026-10-14"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "One owner per table",
+      "detail": "Cleanup finished: every table has a single owner and scheduling moved to dbt.",
+      "date": "2026-10-16"
+    }
+  ],
+  "upcoming": []
+}

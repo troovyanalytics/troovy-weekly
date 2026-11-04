@@ -1,0 +1,50 @@
+{
+  "start": "2026-08-31",
+  "end": "2026-09-06",
+  "headline": "Meta Ads data joins the platform",
+  "stats": [
+    {
+      "label": "sources syncing",
+      "value": "4"
+    },
+    {
+      "label": "Meta ad accounts",
+      "value": "2"
+    },
+    {
+      "label": "personal data in error logs",
+      "value": "0"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "engineering",
+      "title": "Meta Ads sync",
+      "detail": "Campaigns, ads and daily insights from Meta flow into Postgres.",
+      "date": "2026-09-03"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Unicommerce facilities and history backfill",
+      "detail": "Facility sync added, plus a resumable driver to backfill historical orders.",
+      "date": "2026-09-02"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Personal data kept out of logs",
+      "detail": "Fixed error logging that could store customer details in the database.",
+      "date": "2026-09-02"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Meta token in Secrets Manager",
+      "detail": "The Meta Ads token is stored in AWS, never in files on the server.",
+      "date": "2026-09-03"
+    }
+  ],
+  "upcoming": []
+}

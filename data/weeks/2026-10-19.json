@@ -1,0 +1,103 @@
+{
+  "start": "2026-10-19",
+  "end": "2026-10-25",
+  "headline": "Every pipeline is serverless and the last cron server is off",
+  "stats": [
+    {
+      "label": "pipelines moved to Fargate this week",
+      "value": "4"
+    },
+    {
+      "label": "cron jobs left on servers",
+      "value": "0"
+    },
+    {
+      "label": "live inventory refresh",
+      "value": "15 min"
+    },
+    {
+      "label": "server compute saved",
+      "value": "~$1/day"
+    }
+  ],
+  "items": [
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Shopify orders on Fargate",
+      "detail": "Orders sync hourly and the product catalogue daily.",
+      "date": "2026-10-19"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Clickpost shipments on Fargate",
+      "detail": "Shipment status refreshes every 15 minutes.",
+      "date": "2026-10-19"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Email reports pipeline on Fargate",
+      "detail": "7 jobs load GoKwik, KwikEngage tickets and CSAT, and Clickpost reports from email twice a day.",
+      "date": "2026-10-21"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "dbt models on Fargate",
+      "detail": "Staging, reporting and daily Unicommerce models now rebuild on schedule without a server.",
+      "date": "2026-10-22"
+    },
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Live inventory every 15 minutes",
+      "detail": "Unicommerce inventory loads every 15 minutes and the inventory dashboards rebuild 4 minutes later.",
+      "date": "2026-10-22"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Sajid's Live Inventory and Critical SKUs",
+      "detail": "Sajid's new Live Inventory and Critical SKUs dashboards read the 15-minute stock feed.",
+      "date": "2026-10-22"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Demand plan with units and revenue",
+      "detail": "Demand plan shows units and revenue, with a monthly forecast snapshot.",
+      "date": "2026-10-23"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Alerts on any failed pipeline",
+      "detail": "A failed run sends an email within seconds, so problems are caught before anyone opens a dashboard.",
+      "date": "2026-10-21"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Daily Metabase backup to Git",
+      "detail": "Dashboard and question definitions are exported every day by a GitHub Action.",
+      "date": "2026-10-19"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Fargate code merged to main",
+      "detail": "All the migration work is on main, and Terraform shows zero drift against production.",
+      "date": "2026-10-19"
+    },
+    {
+      "section": "big",
+      "area": "devops",
+      "title": "Last cron server stopped",
+      "detail": "With every job on Fargate, the old sync server was snapshotted and stopped. That saves about $1 a day in compute.",
+      "date": "2026-10-23"
+    }
+  ],
+  "upcoming": []
+}

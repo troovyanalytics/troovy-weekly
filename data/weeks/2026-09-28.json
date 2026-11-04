@@ -1,0 +1,71 @@
+{
+  "start": "2026-09-28",
+  "end": "2026-10-04",
+  "headline": "Alerts on every pipeline and secrets in one place",
+  "stats": [
+    {
+      "label": "repos on Secrets Manager",
+      "value": "6"
+    },
+    {
+      "label": "pipeline states watched",
+      "value": "4"
+    },
+    {
+      "label": "platform roadmap",
+      "value": "1"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "devops",
+      "title": "Pipeline watcher",
+      "detail": "Emails when a pipeline fails, recovers, gets stuck or goes stale.",
+      "date": "2026-09-30"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Daily drop checks",
+      "detail": "Alerts when Meta spend or order counts drop unexpectedly.",
+      "date": "2026-09-30"
+    },
+    {
+      "section": "big",
+      "area": "devops",
+      "title": "All secrets in Secrets Manager",
+      "detail": "All six pipeline repos read credentials from AWS. No passwords in files.",
+      "date": "2026-10-01"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Nightly Unicommerce backfill",
+      "detail": "Re-syncs the last two days every night and retries timeouts.",
+      "date": "2026-09-30"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Meta Ads daily report",
+      "detail": "Day-on-day performance for every ad.",
+      "date": "2026-09-28"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Smarter courier scoring",
+      "detail": "RTO and NDR on closed shipments, cost by pickup zone.",
+      "date": "2026-09-28"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Roadmap and onboarding guide",
+      "detail": "A written data platform roadmap, and a guide for new analytics team members.",
+      "date": "2026-09-30"
+    }
+  ],
+  "upcoming": []
+}

@@ -1,0 +1,50 @@
+{
+  "start": "2026-08-17",
+  "end": "2026-08-23",
+  "headline": "Day one: the platform's foundation is laid",
+  "stats": [
+    {
+      "label": "first pipeline (Unicommerce orders)",
+      "value": "1"
+    },
+    {
+      "label": "production Postgres database",
+      "value": "1"
+    },
+    {
+      "label": "infrastructure written as code",
+      "value": "100%"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "devops",
+      "title": "Production network and Postgres database",
+      "detail": "VPC, subnets and an RDS Postgres database, all in Terraform. The database password is generated once and kept only in Secrets Manager.",
+      "date": "2026-08-19"
+    },
+    {
+      "section": "big",
+      "area": "engineering",
+      "title": "Unicommerce order sync, first version",
+      "detail": "Orders from every Unicommerce channel start flowing into our own database.",
+      "date": "2026-08-21"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Staging schema and app database user",
+      "detail": "A separate schema and a least-privilege user for the pipelines.",
+      "date": "2026-08-20"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Business data lands in the right schema",
+      "detail": "Fixed a bug that wrote Unicommerce data to the wrong place.",
+      "date": "2026-08-23"
+    }
+  ],
+  "upcoming": []
+}

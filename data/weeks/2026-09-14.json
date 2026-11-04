@@ -1,0 +1,64 @@
+{
+  "start": "2026-09-14",
+  "end": "2026-09-20",
+  "headline": "A bigger database and the first courier scores",
+  "stats": [
+    {
+      "label": "database size class",
+      "value": "2×"
+    },
+    {
+      "label": "CloudWatch alarms",
+      "value": "4"
+    },
+    {
+      "label": "courier scoring model",
+      "value": "1"
+    }
+  ],
+  "items": [
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Database and sync server upsized",
+      "detail": "Postgres moved to a larger class and alarms watch CPU and health on both servers.",
+      "date": "2026-09-15"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Database performance insights",
+      "detail": "Slow-query visibility turned on, on the free tier.",
+      "date": "2026-09-18"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Clickpost comprehensive reports",
+      "detail": "Full Clickpost shipment reports load from email.",
+      "date": "2026-09-16"
+    },
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Courier scoring pipeline",
+      "detail": "Freight rate slabs and courier performance combine into a score per courier.",
+      "date": "2026-09-18"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Ops Report in Metabase",
+      "detail": "A reporting view built for the operations dashboard.",
+      "date": "2026-09-17"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "NDR history protected",
+      "detail": "Fixed a bug where a blank report could wipe earlier NDR attempts.",
+      "date": "2026-09-17"
+    }
+  ],
+  "upcoming": []
+}

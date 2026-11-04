@@ -1,0 +1,117 @@
+{
+  "start": "2026-10-26",
+  "end": "2026-11-01",
+  "headline": "A demand plan with safety stock, Sajid's B2B models live, and a faster hourly refresh",
+  "stats": [
+    {
+      "label": "safety stock on November's consumer plan",
+      "value": "+20%"
+    },
+    {
+      "label": "B2B models from Sajid's handover now live",
+      "value": "33"
+    },
+    {
+      "label": "hourly staging run",
+      "value": "420→270s"
+    },
+    {
+      "label": "months of Uniware history backfilled (Apr–Jul)",
+      "value": "4"
+    }
+  ],
+  "items": [
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Stock-outs no longer shrink the forecast",
+      "detail": "Days a product was out of stock are left out of its daily rate and growth, so a stock-out isn't read as falling demand (Chocolate Cookies in September).",
+      "date": "2026-10-26"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "title": "Demand View: 4 months actual + 3 months forecast",
+      "detail": "One pivot per SKU with actual, current and forecast months, and a flag on SKUs that were likely out of stock.",
+      "date": "2026-10-26"
+    },
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Per-SKU safety stock in the plan",
+      "detail": "Plan units = forecast + a buffer from each SKU's own week-to-week swings (90% service level). In the backtest it ran short 3.8% of the time, against about 4.4% for a flat buffer.",
+      "date": "2026-10-29"
+    },
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Sajid's B2B ops models live",
+      "detail": "33 models for POs, GRNs, inventory and invoices now rebuild daily in dbt, in the existing schemas, with nothing else changed.",
+      "date": "2026-10-29"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "November plan frozen on the 1st",
+      "detail": "The monthly snapshot saved November's plan with safety stock for all 5,394 rows, so production plans on a number that doesn't move.",
+      "date": "2026-11-01"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "B2B Uniware data every 15 minutes",
+      "detail": "B2B sale orders, gatepasses, purchase orders and master inventory now sync on a new 15-minute schedule.",
+      "date": "2026-10-27"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Uniware history back to April",
+      "detail": "B2B sale order items, gatepasses, purchase orders and GRNs backfilled for April–July, so Sajid's reports cover the full year.",
+      "date": "2026-10-29"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Demand tests made reliable",
+      "detail": "Fixed a race between the order sync and the demand build that failed the daily run on two days.",
+      "date": "2026-10-26"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Uniware login retries on outages",
+      "detail": "A short Unicommerce login outage now gets retried instead of failing every stream (it had failed 87 runs on 27 Oct).",
+      "date": "2026-10-28"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Hourly staging run 35% faster",
+      "detail": "New indexes on the order tables and a leaner shipment model cut the hourly refresh from 420 to about 270 seconds.",
+      "date": "2026-10-28"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "title": "Metabase cards off raw tables",
+      "detail": "Three cards (Meta campaigns MoM and two Shopify cancellation reports) now read clean staging and reporting tables, with identical numbers.",
+      "date": "2026-10-29"
+    },
+    {
+      "section": "adhoc",
+      "area": "software",
+      "date": "2026-10-30",
+      "title": "Shopify admin app: stack proposal",
+      "detail": "The manager asked for an in-house app inside the Shopify admin. Proposed a custom embedded Shopify app that shows our stock, shipment and demand data on order and product pages."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-29",
+      "title": "Demand history back to January",
+      "detail": "Checked how far back clean demand goes for projections, and found which months need an older warehouse added."
+    }
+  ],
+  "upcoming": []
+}

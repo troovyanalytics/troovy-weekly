@@ -1,0 +1,78 @@
+{
+  "start": "2026-10-05",
+  "end": "2026-10-11",
+  "headline": "dbt arrives and database storage drops by more than half",
+  "stats": [
+    {
+      "label": "database storage",
+      "value": "22.4 → 9.7 GB"
+    },
+    {
+      "label": "marketplace lines re-linked",
+      "value": "67,815"
+    },
+    {
+      "label": "repos with CI tests",
+      "value": "5"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Reporting built by dbt",
+      "detail": "All reporting models moved to dbt with tests, and the old shadow setup was removed.",
+      "date": "2026-10-08"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Staging core on dbt",
+      "detail": "Orders, items, products, customers and refunds rebuilt as tested dbt models. 67,815 unlinked marketplace lines fixed.",
+      "date": "2026-10-09"
+    },
+    {
+      "section": "big",
+      "area": "devops",
+      "title": "Raw JSON archived to S3",
+      "detail": "Raw API payloads moved from the database to S3, cutting storage from 22.4 to 9.7 GB.",
+      "date": "2026-10-06"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "CI on every pipeline repo",
+      "detail": "Tests run on Python 3.12 for every push.",
+      "date": "2026-10-05"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Keyless Google Sheets access",
+      "detail": "Pipelines read Google Sheets through workload identity, with no service-account keys.",
+      "date": "2026-10-08"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Reference data from Google Sheets",
+      "detail": "Freight, box and zone data sync from Sheets with versioned history.",
+      "date": "2026-10-08"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Freight on volumetric weight",
+      "detail": "Courier freight is priced on box volumetric weight.",
+      "date": "2026-10-05"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Deadlocks fixed",
+      "detail": "Unicommerce batch writes no longer deadlock each other.",
+      "date": "2026-10-08"
+    }
+  ],
+  "upcoming": []
+}

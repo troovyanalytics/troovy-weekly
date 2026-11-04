@@ -1,0 +1,71 @@
+{
+  "start": "2026-09-07",
+  "end": "2026-09-13",
+  "headline": "Email reports, more Shopify tables and every marketplace in staging",
+  "stats": [
+    {
+      "label": "sources syncing",
+      "value": "6"
+    },
+    {
+      "label": "marketplaces in staging",
+      "value": "4"
+    },
+    {
+      "label": "new email-report pipelines",
+      "value": "2"
+    }
+  ],
+  "items": [
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Clickpost NDR reports from email",
+      "detail": "A new pipeline reads Clickpost NDR reports straight from Gmail.",
+      "date": "2026-09-07"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "GoKwik payment data",
+      "detail": "GoKwik payment status loads into the database.",
+      "date": "2026-09-11"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Shopify refunds, shipping and products",
+      "detail": "Refunds, shipping lines, products and variants added.",
+      "date": "2026-09-07"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Unicommerce SKU catalogue",
+      "detail": "Item master sync for every product and SKU.",
+      "date": "2026-09-11"
+    },
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Multi-channel staging",
+      "detail": "Amazon, Flipkart, Firstcry and Popclub orders sit beside Shopify in one model.",
+      "date": "2026-09-11"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "Meta rate limits handled",
+      "detail": "Bounded retries and split schedules stop Meta's usage cap from failing runs.",
+      "date": "2026-09-09"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Database slowdown fixed",
+      "detail": "Fixed disk burst-credit exhaustion on the database and added monitoring alerts.",
+      "date": "2026-09-11"
+    }
+  ],
+  "upcoming": []
+}

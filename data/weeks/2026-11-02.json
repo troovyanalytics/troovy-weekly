@@ -1,0 +1,174 @@
+{
+  "start": "2026-11-02",
+  "end": "2026-11-08",
+  "headline": "Real product costs in the P&L and a production plan that stays fixed",
+  "stats": [
+    {
+      "label": "real COGS of net sales, last 30 days (was assumed 32%)",
+      "value": "42.5%"
+    },
+    {
+      "label": "of plan frozen on the 1st for raw material",
+      "value": "3 months"
+    },
+    {
+      "label": "December quick-commerce forecast, now with growth",
+      "value": "+3.7%"
+    },
+    {
+      "label": "demand dashboard cards updated",
+      "value": "7"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Actual COGS in the D2C P&L",
+      "detail": "Per-piece product cost from the manager's cost sheet replaces the flat 32% guess. Hard combos like the Diwali hamper are costed from their contents.",
+      "date": "2026-11-02"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "COGS from a Google Sheet",
+      "detail": "The manager edits costs in the 'Cogs' sheet and the hourly run picks them up, with checks for typos and unknown SKUs. No code change per price update.",
+      "date": "2026-11-02"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Demand dashboard follows the calendar month",
+      "detail": "Seven planning cards now roll to the new month on the 1st and show plan units (forecast + safety stock) next to the forecast.",
+      "date": "2026-11-02"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Meta spend survives campaign renames",
+      "detail": "Renaming an ad campaign no longer moves its spend into the wrong category in the P&L.",
+      "date": "2026-11-02"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Growth for Blinkit, Swiggy and Zepto",
+      "detail": "Quick-commerce growth now uses a 30-day window (their PO data starts in August) and only ever raises the plan. December's quick-commerce forecast is up 3.7%.",
+      "date": "2026-11-03"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "title": "Frozen 3-month plan card",
+      "detail": "Raw material and production plan on the plan frozen on the 1st for the next 3 months, shown next to today's live forecast and how far it has moved.",
+      "date": "2026-11-03"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "title": "P&L: Meta spend inside CM2",
+      "detail": "The category P&L now counts Meta ad spend in CM2 together with freight, warehouse and payment costs. The separate CM3 lines are gone.",
+      "date": "2026-11-03"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-02",
+      "title": "List of SKUs missing a cost",
+      "detail": "Shared every SKU that has sales but no cost in the COGS sheet, so the manager could fill the gaps."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-02",
+      "title": "Plan vs Stock card",
+      "detail": "Per SKU and warehouse: this month's remaining plan next to the stock on hand."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-03",
+      "title": "Demand projection by channel and warehouse",
+      "detail": "Two dashboard cards now show the last 3 months, the current month and the next 3 months, like the other planning cards."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-03",
+      "title": "Diwali hamper cost estimate",
+      "detail": "Costed the new 15-item Diwali combo from its parts (about Rs 515 before GST) and flagged the 3 parts that still need real costs."
+    },
+    {
+      "section": "adhoc",
+      "area": "software",
+      "date": "2026-11-03",
+      "title": "Costing web app design for the COO",
+      "detail": "Designed a BOM and product-costing web app with 6 roles (NPD, commercial, procurement, quality, admin) that writes straight to the database."
+    },
+    {
+      "section": "adhoc",
+      "area": "software",
+      "date": "2026-11-03",
+      "title": "Budget tracker requirements",
+      "detail": "Requirements and approach for a budget tracker: 8 teams log spend against Finance budgets, with Founder and Finance Head approval when over budget."
+    },
+    {
+      "section": "adhoc",
+      "area": "devops",
+      "date": "2026-11-03",
+      "title": "AWS Organizations guide",
+      "detail": "Guide to running several AWS accounts under one bill with central access control, at no extra cost."
+    },
+    {
+      "section": "adhoc",
+      "area": "devops",
+      "date": "2026-11-03",
+      "title": "Architecture page refreshed",
+      "detail": "The platform architecture page now shows all 24 live schedules, the B2B sources and the Google Sheets inputs."
+    }
+  ],
+  "upcoming": [
+    {
+      "area": "software",
+      "when": "Fri 6 Nov",
+      "status": "in progress",
+      "title": "Costing web app, first version",
+      "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load."
+    },
+    {
+      "area": "analytics",
+      "when": "Next week",
+      "status": "planned",
+      "title": "Demand dashboard: lost sales, forecast accuracy, KPI tiles",
+      "detail": "The next cards on the planning dashboard after Plan vs Stock."
+    },
+    {
+      "area": "analytics",
+      "when": "When the SKU exists",
+      "status": "blocked",
+      "title": "Diwali hamper into the COGS sync",
+      "detail": "The COGS sheet sync is on hold until the new combo is created in Unicommerce."
+    },
+    {
+      "area": "engineering",
+      "when": "This week",
+      "status": "in progress",
+      "title": "Weekly page on GitHub Pages",
+      "detail": "This page builds and goes live on every push, with one fixed link."
+    },
+    {
+      "area": "devops",
+      "when": "~9 Nov",
+      "status": "planned",
+      "title": "Retire the old sync server",
+      "detail": "Terminate the stopped EC2 server after its snapshot, now that nothing runs on it."
+    },
+    {
+      "area": "software",
+      "when": "Waiting on manager",
+      "status": "waiting",
+      "title": "Shopify admin app",
+      "detail": "Starts once the feature list is agreed."
+    }
+  ]
+}

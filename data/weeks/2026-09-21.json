@@ -1,0 +1,64 @@
+{
+  "start": "2026-09-21",
+  "end": "2026-09-27",
+  "headline": "Shopify P&L and ROAS by category",
+  "stats": [
+    {
+      "label": "P&L models",
+      "value": "2"
+    },
+    {
+      "label": "KwikEngage pipelines",
+      "value": "2"
+    },
+    {
+      "label": "Ops dashboard refresh",
+      "value": "1 hr"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "analytics",
+      "title": "Daily Shopify P&L",
+      "detail": "Sales, GST, RTO, Meta spend, CAC, AOV and ROAS for every day.",
+      "date": "2026-09-21"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "P&L by category",
+      "detail": "Bundle-aware categories with ad spend, CAC and ROAS for new and existing customers.",
+      "date": "2026-09-23"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "KwikEngage tickets and CSAT",
+      "detail": "Support tickets and customer satisfaction scores load from email.",
+      "date": "2026-09-22"
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "title": "Faster Ops dashboard",
+      "detail": "The ops report became a table rebuilt every hour instead of a slow live view.",
+      "date": "2026-09-24"
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "title": "More Meta ad metrics",
+      "detail": "Hook rate, add to cart, landing page views and link clicks per ad.",
+      "date": "2026-09-22"
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "title": "Metabase server upgraded",
+      "detail": "More memory for the dashboards as usage grew.",
+      "date": "2026-09-25"
+    }
+  ],
+  "upcoming": []
+}

@@ -1,0 +1,361 @@
+<title>Troovy Data Weekly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* One week per view: rail of weeks, headline + stats, big achievements, work split, wins, adhoc, upcoming.
+   Data comes only from the <script id="weeks-data"> block that build_static.py embeds. Single dark look by choice. */
+:root {
+  color-scheme: dark;
+  --bg: #0c0a1d;
+  --panel: #15122c;
+  --panel-2: #1c1839;
+  --line: #2e2856;
+  --fg: #f3f0ff;
+  --muted: #aaa3d1;
+  --dim: #7a73a6;
+  --teal: #2de2c4;
+  --violet: #9a8cff;
+  --magenta: #ff5fa2;
+  --gold: #ffd447;
+  --saffron: #ff9f43;
+  /* area colours: shared by the split bar, legend, chips and card accents */
+  --a-engineering: #3987e5;
+  --a-devops: #199e70;
+  --a-analytics: #d95926;
+  --a-software: #d55181;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(800px 480px at 0% -10%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 60%),
+    radial-gradient(800px 520px at 100% 0%, color-mix(in srgb, var(--magenta) 16%, transparent), transparent 60%),
+    radial-gradient(900px 600px at 50% 115%, color-mix(in srgb, var(--violet) 14%, transparent), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
+}
+[hidden] { display: none !important; }
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-block: 40px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 36px;
+}
+h1, h2, h3, h4 { font-family: var(--display); margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--teal); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Header */
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; }
+.top-left { display: grid; gap: 10px; min-width: 0; }
+.top h1 { font-size: clamp(32px, 5.4vw, 58px); font-weight: 800; line-height: 1.02; letter-spacing: -.02em; }
+.top h1 span { background: linear-gradient(92deg, var(--teal), var(--violet) 45%, var(--magenta)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pill { font-family: var(--mono); font-size: 13px; text-decoration: none; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.pill:hover { border-color: var(--teal); }
+
+/* Week rail */
+.rail { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.wk { flex: 0 0 auto; font: inherit; color: var(--muted); cursor: pointer; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; display: grid; gap: 2px; text-align: left; }
+.wk b { font-family: var(--display); color: var(--fg); font-size: 15px; }
+.wk small { font-family: var(--mono); font-size: 11px; }
+.wk[aria-current="true"] { border-color: var(--teal); background: linear-gradient(160deg, color-mix(in srgb, var(--teal) 18%, var(--panel)), var(--panel)); box-shadow: 0 0 22px color-mix(in srgb, var(--teal) 28%, transparent); }
+
+/* Week head */
+.week { display: grid; gap: 34px; }
+.week-head { display: grid; gap: 10px; }
+.range { font-family: var(--mono); color: var(--teal); font-size: 13px; letter-spacing: .06em; }
+.week-head h2 { font-size: clamp(24px, 3.4vw, 38px); font-weight: 700; letter-spacing: -.01em; max-width: 30ch; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.stat { border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 85%, transparent); border-radius: 14px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.stat b { font-family: var(--display); font-size: 28px; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.stat span { font-size: 13px; color: var(--muted); }
+.stat:nth-child(4n+1) b { color: var(--teal); }
+.stat:nth-child(4n+2) b { color: var(--magenta); }
+.stat:nth-child(4n+3) b { color: var(--gold); }
+.stat:nth-child(4n+4) b { color: var(--violet); }
+
+/* Section heads */
+.sec { display: grid; gap: 14px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; }
+.sec-head h3 { font-size: 22px; font-weight: 700; }
+.sec-head .ic { font-size: 18px; }
+.sec-head small { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+.sec-head .hint { flex-basis: 100%; font-size: 13px; color: var(--dim); }
+
+/* Area chip */
+.chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 45%, var(--line)); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--c); }
+[data-area="engineering"] { --c: var(--a-engineering); }
+[data-area="devops"] { --c: var(--a-devops); }
+[data-area="analytics"] { --c: var(--a-analytics); }
+[data-area="software"] { --c: var(--a-software); }
+
+/* Big achievements */
+.bigs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.big { position: relative; overflow: hidden; border-radius: 18px; padding: 22px 22px 20px; display: grid; gap: 10px; align-content: start;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--gold) 16%, var(--panel)), var(--panel) 55%, color-mix(in srgb, var(--c) 14%, var(--panel)));
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, var(--line));
+  box-shadow: 0 0 34px color-mix(in srgb, var(--gold) 14%, transparent); }
+.big .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.big time { font-family: var(--mono); font-size: 11px; color: var(--gold); }
+.big h4 { font-size: clamp(19px, 2.2vw, 24px); font-weight: 800; line-height: 1.15; }
+.big p { color: var(--muted); font-size: 14px; }
+
+/* Work split */
+.mix { border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--panel) 85%, transparent); padding: 20px; display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; }
+.mix-main { display: grid; gap: 16px; min-width: 0; align-content: start; }
+.bar { display: flex; height: 22px; border-radius: 8px; overflow: hidden; gap: 2px; background: var(--panel-2); }
+.bar span { background: var(--c); min-width: 4px; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.legend li { border: 1px solid var(--line); background: var(--panel-2); border-radius: 12px; padding: 10px 12px; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: baseline; }
+.legend b { font-family: var(--display); font-size: 26px; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; grid-row: span 2; }
+.legend span { font-weight: 600; font-size: 14px; }
+.legend small { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+.legend li.zero { opacity: .5; }
+.mix-side { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pa { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pa div { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 2px; background: var(--panel-2); }
+.pa b { font-family: var(--display); font-size: 28px; line-height: 1; font-variant-numeric: tabular-nums; }
+.pa div:first-child b { color: var(--teal); }
+.pa div:last-child b { color: var(--saffron); }
+.pa span { font-size: 13px; color: var(--muted); }
+.note { font-size: 12.5px; color: var(--dim); }
+@media (max-width: 760px) { .mix { grid-template-columns: minmax(0, 1fr); } }
+
+/* Win + adhoc cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.card { background: linear-gradient(160deg, color-mix(in srgb, var(--c) 11%, var(--panel)), var(--panel) 60%); border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line)); border-radius: 12px; padding: 14px 16px; display: grid; gap: 7px; align-content: start; min-width: 0; }
+.card .meta { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.card time { font-family: var(--mono); font-size: 11px; color: var(--dim); white-space: nowrap; }
+.card h4 { font-size: 16px; font-weight: 700; line-height: 1.25; }
+.card p { font-size: 13.5px; color: var(--muted); }
+.adhoc .card { border-style: dashed; }
+
+/* Upcoming */
+.up { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.up li { border: 1px solid var(--line); border-left: 4px solid var(--c); background: color-mix(in srgb, var(--panel) 90%, transparent); border-radius: 12px; padding: 12px 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; align-items: start; }
+.up h4 { font-size: 16px; font-weight: 700; }
+.up p { font-size: 13.5px; color: var(--muted); grid-column: 1; }
+.up .right { grid-row: span 2; display: grid; gap: 6px; justify-items: end; text-align: right; }
+.up .when { font-family: var(--mono); font-size: 12px; color: var(--fg); }
+.st { font-family: var(--mono); font-size: 11px; border-radius: 6px; padding: 2px 8px; border: 1px solid var(--line); color: var(--muted); }
+.st[data-s="in progress"] { color: var(--teal); border-color: color-mix(in srgb, var(--teal) 50%, var(--line)); }
+.st[data-s="blocked"] { color: #ff6b6b; border-color: color-mix(in srgb, #ff6b6b 50%, var(--line)); }
+.st[data-s="waiting"] { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
+.st[data-s="done"] { color: var(--a-devops); }
+.up-title { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+@media (max-width: 560px) {
+  .cards, .bigs { grid-template-columns: minmax(0, 1fr); }
+  .up li { grid-template-columns: minmax(0, 1fr); }
+  .up .right { grid-row: auto; justify-items: start; text-align: left; display: flex; gap: 8px; }
+}
+
+.state { border: 1px dashed var(--line); border-radius: 14px; padding: 22px; color: var(--muted); display: grid; gap: 6px; }
+.state b { color: var(--fg); font-family: var(--display); font-size: 17px; }
+
+footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--dim); font-size: 13px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+footer b { color: var(--fg); font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .card, .big { transition: transform .2s ease, border-color .2s ease; }
+  .card:hover, .big:hover { transform: translateY(-2px); border-color: var(--c); }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-left">
+      <div class="eyebrow">Troovy Foods · Data team</div>
+      <h1>The data team's <span>week</span></h1>
+    </div>
+    <a class="pill" href="https://claude.ai/artifact/69Z5r72qJGzGEY7ugELGZy" target="_blank" rel="noopener">See the architecture →</a>
+  </header>
+
+  <nav class="rail" id="rail" aria-label="Weeks"></nav>
+
+  <main id="view">
+    <div class="state"><b>Loading the weekly log…</b><p>This week's work appears here once it loads.</p></div>
+  </main>
+
+  <footer>
+    <span>Data platform by <b>Vishal Singh</b></span>
+    <span id="built">Updated every week</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  const AREAS = [
+    ["engineering", "Engineering", "pipelines, syncs, data models"],
+    ["devops", "DevOps", "AWS, Fargate, alerts, cost"],
+    ["analytics", "Analytics", "dashboards, P&L, forecasts"],
+    ["software", "Software Eng", "apps and tools"],
+  ];
+  const AREA_LABEL = Object.fromEntries(AREAS.map(a => [a[0], a[1]]));
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const rail = document.getElementById("rail");
+  const view = document.getElementById("view");
+  let weeks = [], selected = null;
+
+  function parseDay(s) { const [y, m, d] = s.split("-").map(Number); return new Date(Date.UTC(y, m - 1, d)); }
+  function fmtDay(s) { const d = parseDay(s); return d.getUTCDate() + " " + MONTHS[d.getUTCMonth()]; }
+  function fmtRange(w) {
+    const a = parseDay(w.start), b = parseDay(w.end);
+    const left = a.getUTCMonth() === b.getUTCMonth() ? String(a.getUTCDate()) : fmtDay(w.start);
+    return left + " – " + fmtDay(w.end) + " " + b.getUTCFullYear();
+  }
+  function el(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function stateBox(t, b) { const x = el("div", "state"); x.append(el("b", null, t), el("p", null, b)); return x; }
+  function chip(area) { const c = el("span", "chip", AREA_LABEL[area] || area); c.dataset.area = area; return c; }
+  function dateTag(s) { const t = el("time", null, fmtDay(s)); t.dateTime = s; return t; }
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
+  function secHead(icon, title, count, hint) {
+    const h = el("div", "sec-head");
+    h.append(el("span", "ic", icon), el("h3", null, title));
+    if (count != null) h.append(el("small", null, count));
+    if (hint) h.append(el("p", "hint", hint));
+    return h;
+  }
+
+  function renderRail() {
+    rail.replaceChildren();
+    weeks.forEach((w, i) => {
+      const b = el("button", "wk"); b.type = "button";
+      b.setAttribute("aria-current", String(w.id === selected));
+      const n = (w.data.items || []).length;
+      b.append(el("b", null, i === 0 ? "Latest week" : "Week of " + fmtDay(w.data.start)), el("small", null, fmtRange(w.data) + " · " + plural(n, "item", "items")));
+      b.addEventListener("click", () => { selected = w.id; render(); });
+      rail.append(b);
+    });
+  }
+
+  function renderBig(list) {
+    const s = el("section", "sec");
+    s.append(secHead("★", "Big achievements", null));
+    const g = el("div", "bigs");
+    list.forEach(it => {
+      const c = el("article", "big"); c.dataset.area = it.area;
+      const m = el("div", "meta"); m.append(chip(it.area)); if (it.date) m.append(dateTag(it.date));
+      c.append(m, el("h4", null, it.title));
+      if (it.detail) c.append(el("p", null, it.detail));
+      g.append(c);
+    });
+    s.append(g);
+    return s;
+  }
+
+  function renderCards(cls, icon, title, hint, list) {
+    const s = el("section", "sec " + cls);
+    s.append(secHead(icon, title, plural(list.length, "item", "items"), hint));
+    const g = el("div", "cards");
+    list.forEach(it => {
+      const c = el("article", "card"); c.dataset.area = it.area;
+      const m = el("div", "meta"); m.append(chip(it.area)); if (it.date) m.append(dateTag(it.date));
+      c.append(m, el("h4", null, it.title));
+      if (it.detail) c.append(el("p", null, it.detail));
+      g.append(c);
+    });
+    s.append(g);
+    return s;
+  }
+
+  function renderSplit(items) {
+    const total = items.length;
+    const pct = n => total ? Math.round((n / total) * 100) : 0;
+    const box = el("section", "mix");
+    box.setAttribute("aria-label", "Work split");
+    const main = el("div", "mix-main");
+    main.append(secHead("◔", "Work split", plural(total, "item", "items") + " done"));
+    const bar = el("div", "bar"); bar.setAttribute("role", "img");
+    const legend = el("ul", "legend");
+    const parts = [];
+    AREAS.forEach(([key, label, sub]) => {
+      const n = items.filter(it => it.area === key).length;
+      parts.push(label + " " + pct(n) + "%");
+      if (n) { const seg = el("span"); seg.dataset.area = key; seg.style.flex = String(n); seg.title = label + ": " + n + " (" + pct(n) + "%)"; bar.append(seg); }
+      const li = el("li"); li.dataset.area = key; if (!n) li.classList.add("zero");
+      li.append(el("b", null, pct(n) + "%"), el("span", null, label + " · " + n), el("small", null, sub));
+      legend.append(li);
+    });
+    bar.setAttribute("aria-label", "Work split: " + parts.join(", "));
+    main.append(bar, legend);
+
+    const side = el("div", "mix-side");
+    const adhoc = items.filter(it => it.section === "adhoc").length, planned = total - adhoc;
+    side.append(el("div", "eyebrow", "Planned vs adhoc"));
+    const pa = el("div", "pa");
+    [["Planned", planned], ["Adhoc", adhoc]].forEach(([l, n]) => { const d = el("div"); d.append(el("b", null, pct(n) + "%"), el("span", null, l + " · " + n)); pa.append(d); });
+    side.append(pa, el("p", "note", "Share of this week's finished items (big achievements, wins and adhoc). Upcoming work is not counted."));
+    box.append(main, side);
+    return box;
+  }
+
+  function renderUpcoming(list) {
+    const s = el("section", "sec");
+    s.append(secHead("→", "Upcoming / next week", plural(list.length, "item", "items"), "What is lined up next."));
+    const ul = el("ul", "up");
+    list.forEach(it => {
+      const li = el("li"); li.dataset.area = it.area;
+      const t = el("div", "up-title"); t.append(el("h4", null, it.title), chip(it.area));
+      const r = el("div", "right");
+      if (it.when) r.append(el("span", "when", it.when));
+      if (it.status) { const st = el("span", "st", it.status); st.dataset.s = it.status; r.append(st); }
+      li.append(t, r);
+      if (it.detail) li.append(el("p", null, it.detail));
+      ul.append(li);
+    });
+    s.append(ul);
+    return s;
+  }
+
+  function renderWeek() {
+    const w = weeks.find(x => x.id === selected);
+    if (!w) { view.replaceChildren(stateBox("No weeks logged yet", "The first week will show up here once it is added.")); return; }
+    const d = w.data;
+    const items = Array.isArray(d.items) ? d.items : [];
+    const wrap = el("div", "week");
+    const head = el("div", "week-head");
+    head.append(el("div", "range", fmtRange(d)), el("h2", null, d.headline || "The week of " + fmtDay(d.start)));
+    wrap.append(head);
+    if (Array.isArray(d.stats) && d.stats.length) {
+      const st = el("div", "stats");
+      d.stats.forEach(s => { const t = el("div", "stat"); t.append(el("b", null, String(s.value)), el("span", null, String(s.label))); st.append(t); });
+      wrap.append(st);
+    }
+    const big = items.filter(i => i.section === "big"), win = items.filter(i => i.section === "win"), adhoc = items.filter(i => i.section === "adhoc");
+    if (big.length) wrap.append(renderBig(big));
+    if (items.length) wrap.append(renderSplit(items));
+    if (win.length) wrap.append(renderCards("wins", "✓", "Wins", null, win));
+    if (adhoc.length) wrap.append(renderCards("adhoc", "⚡", "Adhoc", "Requests that came in during the week.", adhoc));
+    if (Array.isArray(d.upcoming) && d.upcoming.length) wrap.append(renderUpcoming(d.upcoming));
+    if (!items.length) wrap.append(stateBox("Nothing logged for this week yet", "Items appear here once this week's file is pushed."));
+    view.replaceChildren(wrap);
+  }
+
+  function render() {
+    renderRail(); renderWeek();
+    try { history.replaceState(null, "", "#w" + selected); } catch (e) {}
+  }
+
+  const embedded = document.getElementById("weeks-data");
+  if (!embedded) { view.replaceChildren(stateBox("No data in this page", "Build it with build_static.py.")); return; }
+  weeks = JSON.parse(embedded.textContent).sort((a, b) => b.data.start.localeCompare(a.data.start));
+  const fromHash = (location.hash || "").replace(/^#w/, "");
+  const want = weeks.some(w => w.id === fromHash) ? fromHash : embedded.dataset.selected;
+  selected = weeks.some(w => w.id === want) ? want : (weeks[0] && weeks[0].id);
+  if (embedded.dataset.built) document.getElementById("built").textContent = "Updated " + embedded.dataset.built;
+  window.addEventListener("hashchange", () => { const h = location.hash.replace(/^#w/, ""); if (weeks.some(w => w.id === h) && h !== selected) { selected = h; render(); } });
+  render();
+})();
+</script>
