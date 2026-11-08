@@ -12,15 +12,22 @@
       "value": "+3.7%"
     },
     {
-      "label": "Category P&L base card load time (was 5.4 s)",
-      "value": "0.2 s"
+      "label": "slowest dashboard cards now (were ~60 s)",
+      "value": "< 1 s"
     },
     {
-      "label": "dashboards moved to fast reporting tables",
-      "value": "6"
+      "label": "dashboard cards optimized",
+      "value": "~30"
     }
   ],
   "items": [
+    {
+      "section": "big",
+      "area": "analytics",
+      "date": "2026-11-06",
+      "title": "About 30 dashboard cards optimized: from up to a minute to under a second",
+      "detail": "Six dashboards now read prepared reporting tables, refreshed every hour, instead of scanning raw data each time a card opens. That covers Sajid's four B2B dashboards (Master Inventory, Platform DN, B2B Fill Rate, PO Lifecycle) plus D2C P&L and D2C OPS. B2B Stock Status went from 61.6 s to 0.2 s, Live Inventory 57.8 s to 0.2 s, B2B DOI 56.3 s to 0.2 s, Pending DN Ageing 19.7 s to 0.05 s, D2C Category P&L 63.2 s to 0.6 s, and New vs Returning customers 29 s to 0.5 s. We compared old and new cards on live data and they return the same rows."
+    },
     {
       "section": "big",
       "area": "analytics",
@@ -132,13 +139,6 @@
       "date": "2026-11-05",
       "title": "Ozonetel call reports pipeline live",
       "detail": "Ozonetel sends each call's details to our endpoint and a loader saves them to the database every 15 minutes. Tested end to end; real calls start once Ozonetel turns the callback on."
-    },
-    {
-      "section": "win",
-      "area": "analytics",
-      "date": "2026-11-06",
-      "title": "Dashboards read prepared reporting tables",
-      "detail": "D2C P&L, OPS, B2B Fill Rate, PO Lifecycle, Master Inventory and Platform DN now read ready-made reporting tables instead of raw data. The Category P&L base card went from 5.4 s to 0.2 s with the same rows."
     },
     {
       "section": "win",
