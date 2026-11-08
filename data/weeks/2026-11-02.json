@@ -26,175 +26,275 @@
       "area": "analytics",
       "date": "2026-11-06",
       "title": "About 30 dashboard cards optimized: from up to a minute to under a second",
-      "detail": "Six dashboards now read prepared reporting tables, refreshed every hour, instead of scanning raw data each time a card opens. That covers Sajid's four B2B dashboards (Master Inventory, Platform DN, B2B Fill Rate, PO Lifecycle) plus D2C P&L and D2C OPS. B2B Stock Status went from 61.6 s to 0.2 s, Live Inventory 57.8 s to 0.2 s, B2B DOI 56.3 s to 0.2 s, Pending DN Ageing 19.7 s to 0.05 s, D2C Category P&L 63.2 s to 0.6 s, and New vs Returning customers 29 s to 0.5 s. We compared old and new cards on live data and they return the same rows."
+      "detail": "Six dashboards now read prepared reporting tables, refreshed every hour, instead of working everything out from raw data each time a card opens: the four B2B dashboards (Master Inventory, Platform DN, B2B Fill Rate, PO Lifecycle), D2C P&L and D2C OPS. B2B Stock Status went from 61.6 s to 0.2 s, Live Inventory 57.8 s to 0.2 s, B2B DOI 56.3 s to 0.2 s, Pending DN Ageing 19.7 s to 0.05 s, D2C Category P&L 63.2 s to 0.6 s, and New vs Returning customers 29 s to 0.5 s. We compared old and new cards on live data and they return the same rows.",
+      "explain": {
+        "simple": "Some dashboards took up to a minute to open, because every time someone opened them they worked out all the numbers again from scratch.\n\nNow those numbers are worked out once an hour in the background and kept ready, so the dashboards open in under a second. The numbers shown are the same, only faster. Planning, stock and P&L reviews no longer wait on loading screens.",
+        "technical": "31 Metabase cards moved from inline SQL over raw tables to the dbt `reporting` schema only. Heavy logic became hourly dbt tables (mi_drr_sku_city, mi_b2c_sales_daily, dn_po, b2b_po_fill_rate, shopify_order_facts, shopify_customer_cohort_category and others); live stock stays as views over the 15-minute inventory feed.\n\nParity check: old vs new SQL on prod, same rows (apart from an IST 7-day window fix). Timings measured per card before and after. Doc: docs/dashboard_performance.md (PR #38)."
+      }
     },
     {
       "section": "big",
       "area": "analytics",
       "title": "Actual COGS in the D2C P&L",
-      "detail": "Per-piece product cost from the manager's cost sheet replaces the flat 32% guess. Hard combos like the Diwali hamper are costed from their contents.",
-      "date": "2026-11-02"
+      "detail": "Per-piece product cost from the cost sheet replaces the flat 32% estimate. Hard combos like the Diwali hamper are costed from their contents.",
+      "date": "2026-11-02",
+      "explain": {
+        "simple": "COGS is what each product costs us to make. Earlier the P&L assumed every product cost 32% of its selling price. Now it uses the real cost of each product.\n\nThat put the real figure at about 42.5% of net sales over the last 30 days, so profit per category is now based on actual costs. Gift combos are costed by adding up the products inside them.",
+        "technical": "staging.product_cogs_history and staging.hard_combo_components_history (SCD2 with effective_from / effective_to) feed reporting.shopify_order_cogs: line COGS = units x per-piece cost valid on the order date. Combos are expanded to components; SKUs without a cost fall back to reporting.product_cogs_fallback."
+      }
     },
     {
       "section": "win",
       "area": "engineering",
       "title": "COGS from a Google Sheet",
-      "detail": "The manager edits costs in the 'Cogs' sheet and the hourly run picks them up, with checks for typos and unknown SKUs. No code change per price update.",
-      "date": "2026-11-02"
+      "detail": "Costs are edited in the 'Cogs' sheet and the hourly run picks them up, with checks on every SKU code. No code change per price update.",
+      "date": "2026-11-02",
+      "explain": {
+        "simple": "Product costs live in a Google Sheet that the team already uses. When a cost changes in the sheet, the dashboards pick it up within the hour, with no request to the data team and no code change.\n\nEvery entry is checked against our product list before it reaches the P&L, so the numbers stay reliable.",
+        "technical": "scripts/sync_google_sheets.py reads the 'COGS' and 'Hard combos' tabs hourly (service-account impersonation, read-only scope), validates codes against staging.product_master, and writes versioned rows with effective dates. A guard holds back any change touching more than 25% of rows until someone confirms it."
+      }
     },
     {
       "section": "win",
       "area": "analytics",
       "title": "Demand dashboard follows the calendar month",
       "detail": "Seven planning cards now roll to the new month on the 1st and show plan units (forecast + safety stock) next to the forecast.",
-      "date": "2026-11-02"
+      "date": "2026-11-02",
+      "explain": {
+        "simple": "The demand planning dashboard now moves to the new month by itself on the 1st. Next to the forecast it shows how many units to plan: expected sales plus a safety buffer, so we don't run out.",
+        "technical": "Seven Metabase cards switched from rolling 30-day windows to IST calendar-month anchors (date_trunc on the IST date). plan_units = forecast + per-SKU safety stock from the demand_forecast_monthly model."
+      }
     },
     {
       "section": "win",
       "area": "analytics",
-      "title": "Meta spend survives campaign renames",
-      "detail": "Renaming an ad campaign no longer moves its spend into the wrong category in the P&L.",
-      "date": "2026-11-02"
+      "title": "Meta spend stays in the right category after campaign renames",
+      "detail": "When an ad campaign gets a new name, its spend now stays in the right P&L category.",
+      "date": "2026-11-02",
+      "explain": {
+        "simple": "Facebook/Instagram ad spend is split by product category in the P&L. Now, when the marketing team gives a campaign a new name, its spend still goes to the right category automatically.",
+        "technical": "Category bucketing now keys on the stable campaign_id with a mapping that keeps the earlier name's category, instead of matching the latest campaign_name text (case: the ASC-Conversion-Chips rename)."
+      }
     },
     {
       "section": "win",
       "area": "data_science",
       "title": "Growth for Blinkit, Swiggy and Zepto",
       "detail": "Quick-commerce growth now uses a 30-day window (their PO data starts in August) and only ever raises the plan. December's quick-commerce forecast is up 3.7%.",
-      "date": "2026-11-03"
+      "date": "2026-11-03",
+      "explain": {
+        "simple": "Quick-commerce apps are growing fast. The forecast now includes that recent growth, so the plan for these channels is a bit higher: December's quick-commerce forecast went up 3.7%.\n\nThe growth adjustment can only increase the plan, never cut it, so a slow week doesn't lead to under-stocking.",
+        "technical": "Quick-commerce channels use a 30-day growth window (their PO feed starts 2026-08-01, too short for the 60/90-day window used elsewhere), with growth floored at 0 so it never lowers the base forecast."
+      }
     },
     {
       "section": "adhoc",
       "area": "analytics",
       "title": "Frozen 3-month plan card",
       "detail": "Raw material and production plan on the plan frozen on the 1st for the next 3 months, shown next to today's live forecast and how far it has moved.",
-      "date": "2026-11-03"
+      "date": "2026-11-03",
+      "explain": {
+        "simple": "On the 1st of each month the plan for the next 3 months is saved and frozen. Raw material and production work from that fixed plan, and the card shows how far today's live forecast has moved away from it.\n\nThis gives procurement a stable number to buy against, while still showing when demand is changing.",
+        "technical": "A monthly snapshot of demand_forecast_monthly (plan_units per SKU x month) is taken on the 1st and kept; the card joins the snapshot to the live forecast and shows the delta per SKU and month."
+      }
     },
     {
       "section": "adhoc",
       "area": "analytics",
       "title": "P&L: Meta spend inside CM2",
       "detail": "The category P&L now counts Meta ad spend in CM2 together with freight, warehouse and payment costs. The separate CM3 lines are gone.",
-      "date": "2026-11-03"
+      "date": "2026-11-03",
+      "explain": {
+        "simple": "CM2 is profit after the direct costs of selling an order. Ad spend is now counted there together with delivery, warehouse and payment charges, so one CM2 line shows what an order really earns.",
+        "technical": "Category P&L SQL: Meta spend allocated per category moved into CM2 alongside freight, warehousing and PG costs; the separate CM3 rows were dropped from the card."
+      }
     },
     {
       "section": "adhoc",
       "area": "analytics",
       "date": "2026-11-02",
       "title": "List of SKUs missing a cost",
-      "detail": "Shared every SKU that has sales but no cost in the COGS sheet, so the manager could fill the gaps."
+      "detail": "Shared every SKU that has sales but no cost in the COGS sheet yet, so those costs could be added.",
+      "explain": {
+        "simple": "A list of products that sell but don't have a cost in the sheet yet. Once their costs are added, the P&L uses real numbers for them too.",
+        "technical": "Query: SKUs with Shopify sales in the period and no open row in product_cogs_history (combos expanded to components)."
+      }
     },
     {
       "section": "adhoc",
       "area": "analytics",
       "date": "2026-11-02",
       "title": "Plan vs Stock card",
-      "detail": "Per SKU and warehouse: this month's remaining plan next to the stock on hand."
+      "detail": "Per SKU and warehouse: this month's remaining plan next to the stock on hand.",
+      "explain": {
+        "simple": "For each product and warehouse, this shows how much more we plan to sell this month and how much stock we have. It's an early warning for products that could run out.",
+        "technical": "Metabase card: remaining plan_units for the current IST month (plan minus month-to-date actuals) joined to current stock per SKU x warehouse from the 15-minute inventory views."
+      }
     },
     {
       "section": "adhoc",
       "area": "data_science",
       "date": "2026-11-03",
       "title": "Demand projection by channel and warehouse",
-      "detail": "Two dashboard cards now show the last 3 months, the current month and the next 3 months, like the other planning cards."
+      "detail": "Two dashboard cards now show the last 3 months, the current month and the next 3 months, like the other planning cards.",
+      "explain": {
+        "simple": "Two more planning cards now show the same 7-month view as the rest: 3 months of actual sales, this month, and 3 months of forecast. That makes them easy to compare side by side.",
+        "technical": "Card SQL rewritten on the IST month anchor: last 3 full months of actuals + current month + 3 forecast months, per channel and per warehouse."
+      }
     },
     {
       "section": "adhoc",
       "area": "analytics",
       "date": "2026-11-03",
       "title": "Diwali hamper cost estimate",
-      "detail": "Costed the new 15-item Diwali combo from its parts (about Rs 515 before GST) and flagged the 3 parts that still need real costs."
+      "detail": "Costed the new 15-item Diwali combo from its parts (about Rs 515 before GST) and flagged the 3 parts that still need real costs.",
+      "explain": {
+        "simple": "Worked out what the new 15-item Diwali gift box costs us by adding up the cost of everything inside it, and pointed out the 3 items whose cost is still to be confirmed.",
+        "technical": "Sum of component unit costs x qty from the COGS sheet for the combo's bill of items; 3 components had no cost row and were listed as estimates."
+      }
     },
     {
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-03",
       "title": "Costing web app design for the COO",
-      "detail": "Designed a BOM and product-costing web app with 6 roles (NPD, commercial, procurement, quality, admin) that writes straight to the database."
+      "detail": "Designed a BOM and product-costing web app with 6 roles (NPD, commercial, procurement, quality, admin) that writes straight to the database.",
+      "explain": {
+        "simple": "A design for a simple web app where each team (product development, commercial, procurement, quality, admin) enters its part of a product's recipe and costs. The app then shows the cost and margin of each pack, so costing is no longer spread across Excel files.",
+        "technical": "Next.js app on Postgres (own `costing` schema) with role-based access for 6 roles, BOM + rate masters, cost-per-pack and margin views, Excel import; designed to write directly to the database with an audit trail."
+      }
     },
     {
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-03",
       "title": "Budget tracker requirements",
-      "detail": "Requirements and approach for a budget tracker: 8 teams log spend against Finance budgets, with Founder and Finance Head approval when over budget."
+      "detail": "Requirements and approach for a budget tracker: 8 teams log spend against Finance budgets, with Founder and Finance Head approval when over budget.",
+      "explain": {
+        "simple": "Wrote down what a budget tracker needs to do: 8 teams record what they spend against the budget Finance gives them. Anything over budget needs approval from the Founder and the Finance Head.",
+        "technical": "Requirements doc: teams, budget heads, spend entries, approval workflow (over-budget -> Founder + Finance Head), monthly views; proposed build on the existing Postgres + web app stack."
+      }
     },
     {
       "section": "adhoc",
       "area": "devops",
       "date": "2026-11-03",
       "title": "AWS Organizations guide",
-      "detail": "Guide to running several AWS accounts under one bill with central access control, at no extra cost."
+      "detail": "Guide to running several AWS accounts under one bill with central access control, at no extra cost.",
+      "explain": {
+        "simple": "A guide to keeping several cloud accounts under one bill with central control over who can access what. It adds no extra cost.",
+        "technical": "AWS Organizations: management account + member accounts, consolidated billing, IAM Identity Center for SSO, service control policies; steps and caveats for moving the current account in."
+      }
     },
     {
       "section": "adhoc",
       "area": "devops",
       "date": "2026-11-03",
       "title": "Architecture page refreshed",
-      "detail": "The platform architecture page now shows all 24 live schedules, the B2B sources and the Google Sheets inputs."
+      "detail": "The platform architecture page now shows all 24 live schedules, the B2B sources and the Google Sheets inputs.",
+      "explain": {
+        "simple": "The page that shows how our data systems connect is up to date again. It shows every automatic job, where the data comes from and which Google Sheets feed it.",
+        "technical": "Architecture artifact updated: 24 EventBridge schedules across the Fargate pipelines, B2B sources (Uniware B2B sale orders, gatepass, GRN, POs) and the Google Sheets inputs (COGS, freight, pincode zones, PO sheets)."
+      }
     },
     {
       "section": "big",
       "area": "engineering",
       "date": "2026-11-05",
       "title": "Ozonetel call reports pipeline live",
-      "detail": "Ozonetel sends each call's details to our endpoint and a loader saves them to the database every 15 minutes. Tested end to end; real calls start once Ozonetel turns the callback on."
+      "detail": "Ozonetel sends each call's details to our endpoint and a loader saves them to the database every 15 minutes. Tested end to end; real calls start once Ozonetel turns the callback on.",
+      "explain": {
+        "simple": "Details of every customer support call (who called, how long, who answered, the outcome) will now come into our database automatically. Calls can then sit next to chats in the customer complaints dashboard.\n\nOur side is ready and tested. Data starts flowing once Ozonetel switches the feed on from their side.",
+        "technical": "Ozonetel posts a call detail record per call to an AWS Lambda Function URL (token-checked); the Lambda stores it in S3. A Fargate loader runs every 15 minutes, upserts into raw.ozonetel_calls by call id, and logs runs in ops.ozonetel_sync_runs. The API key is stripped before storage. All infrastructure is in Terraform."
+      }
     },
     {
       "section": "win",
       "area": "data_science",
       "date": "2026-11-04",
       "title": "Quick-commerce demand history back to April",
-      "detail": "April to July quick-commerce demand now comes from Uniware B2B sale orders, from before the Fill Rate sheet started, so the forecast has more history to learn from."
+      "detail": "April to July quick-commerce demand now comes from Uniware B2B sale orders, from before the Fill Rate sheet started, so the forecast has more history to learn from.",
+      "explain": {
+        "simple": "The forecast learns from past sales. For Blinkit, Swiggy and Zepto we now have orders going back to April instead of only August, so the forecast has more months to learn from.",
+        "technical": "qcom_po_demand now takes Uniware B2B sale orders (channel BLINKIT_QC, ZEPTO_*, INSTAMART_*; display_order_code = PO number) for days before each platform's first PO in the Fill Rate sheet, de-duplicating POs present in both. Aug-Oct totals match the sheet within ~1% (PR #36)."
+      }
     },
     {
       "section": "win",
       "area": "engineering",
       "date": "2026-11-05",
       "title": "Costing app: main screens built",
-      "detail": "Costing screen, raw/packing material Excel upload with preview and duplicate checks, a warning when a rate moves more than 30%, and a home dashboard."
+      "detail": "Costing screen, raw/packing material Excel upload with preview and duplicate checks, a warning when a rate moves more than 30%, and a home dashboard.",
+      "explain": {
+        "simple": "The first working screens of the costing app are built. Teams can upload raw and packing material rates from Excel, see the cost of each product, and get a warning when a rate jumps by more than 30%.",
+        "technical": "Next.js 15 + postgres.js + next-auth: costing screen, RM/PM Excel upload with preview and duplicate-name checks, 30% rate-change warning list, role-based home dashboard. Schema migrations tested in a throwaway Docker Postgres."
+      }
     },
     {
       "section": "adhoc",
       "area": "analytics",
       "date": "2026-11-06",
-      "title": "Broken Metabase filters fixed",
-      "detail": "Filters that errored on several cards work again, applied with a script so the change is repeatable."
+      "title": "Metabase card filters working again",
+      "detail": "Filters on a few cards work again, applied with a script so the change is repeatable.",
+      "explain": {
+        "simple": "Some dashboard filters (for example picking a date or a name) had stopped working on a few cards. They work again.",
+        "technical": "Fixed text-variable filters on cards 217-220 and the month filter on 136, and field-filter aliases on 224/227/229 after column renames. Changes are applied through a version-controlled apply script (PR #39)."
+      }
     },
     {
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-06",
       "title": "24 unused dbt views removed",
-      "detail": "Views that no dashboard or model reads were dropped, so each run builds less."
+      "detail": "Views that no dashboard or model reads were dropped, so each run builds less.",
+      "explain": {
+        "simple": "Removed 24 behind-the-scenes data views that no dashboard used any more. Less to build every run means quicker and simpler data refreshes.",
+        "technical": "Dropped 24 dbt view models with no downstream refs and no Metabase card reading them (checked via dbt manifest + Metabase export) (PR #39)."
+      }
     },
     {
       "section": "adhoc",
       "area": "data_science",
       "date": "2026-11-04",
       "title": "Demand forecast formula written up",
-      "detail": "The forecast formula step by step with a worked example and simulations."
+      "detail": "The forecast formula step by step with a worked example and simulations.",
+      "explain": {
+        "simple": "A plain step-by-step explanation of how the demand forecast is calculated, with a worked example, so anyone can follow how a forecast number was reached.",
+        "technical": "docs: base daily rate, stock-out adjustment, growth factor, safety stock (Z x sigma x sqrt lead time) and plan_units, with a worked SKU example and the 2026-11-04 simulations."
+      }
     },
     {
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-04",
       "title": "Weekly page live on GitHub Pages",
-      "detail": "This page now builds and goes live on every push, with one fixed link."
+      "detail": "This page now builds and goes live on every push, with one fixed link.",
+      "explain": {
+        "simple": "This page now lives at one fixed link and updates by itself every time a new week is added.",
+        "technical": "Static site: weekly JSON files validated and rendered by build_static.py; a GitHub Actions workflow builds and deploys to GitHub Pages on every push to main."
+      }
     },
     {
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-06",
       "title": "Own customer app: groundwork",
-      "detail": "Plan to move the customer app from the third-party builder to our own app on the same store listing. D-U-N-S registration for the developer accounts started."
+      "detail": "Plan to move the customer app from the third-party builder to our own app on the same store listing. D-U-N-S registration for the developer accounts started.",
+      "explain": {
+        "simple": "Our customer app is currently built and run through a third-party service. The plan is to move to our own app on the same store listing, so customers keep the same app and simply get an update. The first step, the company's D-U-N-S business registration for the app store accounts, has started.",
+        "technical": "Plan: our own Apple/Google developer organisation accounts (need D-U-N-S), app transfer of the existing listing, then ship the in-house app as an update to it. Estimated 8-10 weeks to users."
+      }
     },
     {
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-08",
       "title": "COGS sheet sync running again",
-      "detail": "The hourly COGS sheet sync had stopped on the new Diwali hamper, which is costed in the sheet but doesn't exist in Unicommerce. The sync now skips that one combo with a warning, and every other check still runs. No cost was missed: nothing changed in the sheet while it was stopped."
+      "detail": "The hourly COGS sheet sync had stopped on the new Diwali hamper, which is costed in the sheet but doesn't exist in Unicommerce. The sync now skips that one combo with a warning, and every other check still runs. No cost was missed: nothing changed in the sheet while it was stopped.",
+      "explain": {
+        "simple": "The hourly update of product costs from the Google Sheet had paused because of one new gift box that is only in the sheet for costing. It now skips that one item and runs normally.\n\nNo cost update was missed: nothing in the sheet changed while it was paused.",
+        "technical": "sync_google_sheets.py validation rejected combo CB_DIW2_26 (not in staging.product_master), failing every run. Added IGNORED_COMBOS: its rows are skipped with a warning, its components still count as known codes, all other checks unchanged (PR #40). First run after release: success, 0 COGS changes."
+      }
     }
   ],
   "upcoming": [
@@ -203,42 +303,66 @@
       "when": "Fri 13 Nov",
       "status": "in progress",
       "title": "Costing web app, first version",
-      "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load."
+      "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load.",
+      "explain": {
+        "simple": "The first usable version of the costing app: teams enter product recipes and see the cost and margin of each pack.",
+        "technical": "v0 scope: BOM entry, cost-per-pack and margin views for 6 roles, Excel bulk import for the first load."
+      }
     },
     {
       "area": "data_science",
       "when": "This week",
       "status": "in progress",
       "title": "Demand projection model: new logic",
-      "detail": "Reworking the projection model: base daily rate from a 30/60-day blend, per-channel growth, and checking the safety-stock Z-score against past months."
+      "detail": "Reworking the projection model: base daily rate from a 30/60-day blend, per-channel growth, and checking the safety-stock Z-score against past months.",
+      "explain": {
+        "simple": "Improving how the forecast works out expected sales, so plans are closer to what actually sells.",
+        "technical": "Base daily rate from a 30/60-day blend, per-channel growth, and a backtest of the safety-stock Z-score against past months."
+      }
     },
     {
       "area": "analytics",
       "when": "Next week",
       "status": "planned",
       "title": "Demand dashboard: lost sales, forecast accuracy, KPI tiles",
-      "detail": "The next cards on the planning dashboard after Plan vs Stock."
+      "detail": "The next cards on the planning dashboard after Plan vs Stock.",
+      "explain": {
+        "simple": "New cards that show sales missed because of stock-outs, how close past forecasts were, and headline numbers at a glance.",
+        "technical": "Next Metabase cards on dashboard 12: lost-sales estimate, forecast vs actual accuracy, KPI tiles."
+      }
     },
     {
       "area": "devops",
       "when": "~9 Nov",
       "status": "planned",
       "title": "Retire the old sync server",
-      "detail": "Terminate the stopped EC2 server after its snapshot, now that nothing runs on it."
+      "detail": "Terminate the stopped EC2 server after its snapshot, now that nothing runs on it.",
+      "explain": {
+        "simple": "Everything now runs on the newer, cheaper setup, so the old server can be switched off for good to save cost.",
+        "technical": "Terminate the stopped EC2 instance after its final snapshot; all jobs run on ECS Fargate."
+      }
     },
     {
       "area": "engineering",
       "when": "Waiting on Ozonetel",
       "status": "waiting",
       "title": "First real Ozonetel calls",
-      "detail": "Check the first real calls against the Ozonetel dashboard, then switch on the no-callback alarm."
+      "detail": "Check the first real calls against the Ozonetel dashboard, then switch on the no-callback alarm.",
+      "explain": {
+        "simple": "Once Ozonetel turns the feed on, we'll check the first calls against their own dashboard to make sure the numbers match, then switch on an alert in case the feed ever stops.",
+        "technical": "Verify first CDRs in raw.ozonetel_calls vs the Ozonetel dashboard, then enable the no-callback CloudWatch alarm (ozonetel_no_callback_alarm_enabled)."
+      }
     },
     {
       "area": "engineering",
       "when": "In progress",
       "status": "in progress",
       "title": "Own customer app",
-      "detail": "Developer accounts after D-U-N-S, then the store listing transfer."
+      "detail": "Developer accounts after D-U-N-S, then the store listing transfer.",
+      "explain": {
+        "simple": "Next steps: create our own app store accounts, then move the existing app listing to them.",
+        "technical": "Developer org accounts after D-U-N-S, then the store listing transfer."
+      }
     }
   ]
 }

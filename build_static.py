@@ -44,6 +44,10 @@ def check_week(path, week):
             errors.append(f"{tag}: area must be one of {sorted(AREAS)}")
         if not it.get("title"):
             errors.append(f"{tag}: title is empty")
+        x = it.get("explain")
+        if x is not None and (not isinstance(x, dict) or set(x) - {"simple", "technical"}
+                              or not all(isinstance(v, str) and v.strip() for v in x.values()) or not x):
+            errors.append(f"{tag}: explain must be {{\"simple\": text, \"technical\": text}} (non-empty)")
     for i, it in enumerate(week.get("upcoming", [])):
         tag = f"{where} upcoming[{i}] {it.get('title', '?')!r}"
         if it.get("area") not in AREAS:
@@ -52,6 +56,10 @@ def check_week(path, week):
             errors.append(f"{tag}: status must be one of {sorted(STATUSES)}")
         if not it.get("title"):
             errors.append(f"{tag}: title is empty")
+        x = it.get("explain")
+        if x is not None and (not isinstance(x, dict) or set(x) - {"simple", "technical"}
+                              or not all(isinstance(v, str) and v.strip() for v in x.values()) or not x):
+            errors.append(f"{tag}: explain must be {{\"simple\": text, \"technical\": text}} (non-empty)")
     return errors
 
 

@@ -162,6 +162,22 @@ a { color: var(--teal); }
   .up .right { grid-row: auto; justify-items: start; text-align: left; display: flex; gap: 8px; }
 }
 
+/* Click-to-explain (Simple / Technical) */
+.has-xp { cursor: pointer; }
+.xp-btn { justify-self: start; display: inline-flex; align-items: center; gap: 6px; font: 600 12.5px/1 var(--mono); color: var(--c, var(--fg)); background: transparent; border: 1px solid color-mix(in srgb, var(--c, var(--fg)) 40%, var(--line)); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.xp-btn:hover { background: color-mix(in srgb, var(--c, var(--fg)) 12%, transparent); }
+.xp-btn:focus-visible, .xp-tab:focus-visible { outline: 2px solid var(--c, var(--fg)); outline-offset: 2px; }
+.xp-btn .car { transition: transform .2s ease; }
+.xp-btn[aria-expanded="true"] .car { transform: rotate(180deg); }
+.xp { display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; cursor: auto; grid-column: 1 / -1; }
+.xp[hidden] { display: none; }
+.xp-tabs { display: inline-flex; gap: 4px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 3px; justify-self: start; }
+.xp-tab { font: 600 12.5px/1 var(--mono); color: var(--muted); background: transparent; border: 0; border-radius: 7px; padding: 7px 12px; cursor: pointer; }
+.xp-tab[aria-selected="true"] { background: var(--panel); color: var(--fg); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c, var(--fg)) 45%, var(--line)); }
+.xp-body { font-size: 14px; line-height: 1.55; color: var(--fg); }
+.xp-body p { color: var(--fg) !important; font-size: 14px !important; }
+.xp-body p + p { margin-top: 8px; }
+
 .state { border: 1px dashed var(--line); border-radius: 14px; padding: 22px; color: var(--muted); display: grid; gap: 6px; }
 .state b { color: var(--fg); font-family: var(--display); font-size: 17px; }
 
@@ -228,6 +244,37 @@ footer b { color: var(--fg); font-weight: 600; }
     return h;
   }
 
+  let xpSeq = 0;
+  // Optional it.explain = {simple, technical}: a toggle button + a panel with two tabs.
+  function addExplain(card, it) {
+    const x = it.explain;
+    if (!x || (!x.simple && !x.technical)) return;
+    const id = "xp" + (++xpSeq);
+    const btn = el("button", "xp-btn"); btn.type = "button";
+    btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-controls", id);
+    btn.append(el("span", null, "What does this mean?"), el("span", "car", "▾"));
+    const panel = el("div", "xp"); panel.id = id; panel.hidden = true;
+    const tabs = el("div", "xp-tabs"); tabs.setAttribute("role", "tablist");
+    const body = el("div", "xp-body"); body.setAttribute("role", "tabpanel");
+    const modes = [["simple", "Simple"], ["technical", "Technical"]].filter(([k]) => x[k]);
+    function show(k) {
+      tabs.querySelectorAll(".xp-tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.k === k)));
+      body.replaceChildren(...String(x[k]).split(/\n\n+/).map(t => el("p", null, t)));
+    }
+    modes.forEach(([k, label]) => {
+      const t = el("button", "xp-tab", label); t.type = "button"; t.dataset.k = k; t.setAttribute("role", "tab");
+      t.addEventListener("click", e => { e.stopPropagation(); show(k); });
+      tabs.append(t);
+    });
+    panel.append(tabs, body); show(modes[0][0]);
+    function toggle() { const open = panel.hidden; panel.hidden = !open; btn.setAttribute("aria-expanded", String(open)); }
+    btn.addEventListener("click", e => { e.stopPropagation(); toggle(); });
+    panel.addEventListener("click", e => e.stopPropagation());
+    card.classList.add("has-xp");
+    card.addEventListener("click", e => { if (!window.getSelection().toString()) toggle(); });
+    card.append(btn, panel);
+  }
+
   function renderRail() {
     rail.replaceChildren();
     weeks.forEach((w, i) => {
@@ -249,6 +296,7 @@ footer b { color: var(--fg); font-weight: 600; }
       const m = el("div", "meta"); m.append(chip(it.area)); if (it.date) m.append(dateTag(it.date));
       c.append(m, el("h4", null, it.title));
       if (it.detail) c.append(el("p", null, it.detail));
+      addExplain(c, it);
       g.append(c);
     });
     s.append(g);
@@ -264,6 +312,7 @@ footer b { color: var(--fg); font-weight: 600; }
       const m = el("div", "meta"); m.append(chip(it.area)); if (it.date) m.append(dateTag(it.date));
       c.append(m, el("h4", null, it.title));
       if (it.detail) c.append(el("p", null, it.detail));
+      addExplain(c, it);
       g.append(c);
     });
     s.append(g);
@@ -313,6 +362,7 @@ footer b { color: var(--fg); font-weight: 600; }
       if (it.status) { const st = el("span", "st", it.status); st.dataset.s = it.status; r.append(st); }
       li.append(t, r);
       if (it.detail) li.append(el("p", null, it.detail));
+      addExplain(li, it);
       ul.append(li);
     });
     s.append(ul);
