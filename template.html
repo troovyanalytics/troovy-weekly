@@ -23,7 +23,7 @@
   --a-engineering: #3987e5;
   --a-devops: #199e70;
   --a-analytics: #d95926;
-  --a-software: #d55181;
+  --a-data_science: #d55181;
   --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -100,7 +100,7 @@ a { color: var(--teal); }
 [data-area="engineering"] { --c: var(--a-engineering); }
 [data-area="devops"] { --c: var(--a-devops); }
 [data-area="analytics"] { --c: var(--a-analytics); }
-[data-area="software"] { --c: var(--a-software); }
+[data-area="data_science"] { --c: var(--a-data_science); }
 
 /* Big achievements */
 .bigs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
@@ -197,10 +197,10 @@ footer b { color: var(--fg); font-weight: 600; }
 <script>
 (function () {
   const AREAS = [
-    ["engineering", "Engineering", "pipelines, syncs, data models"],
+    ["engineering", "Software Engineering", "pipelines, syncs, apps, tools"],
     ["devops", "DevOps", "AWS, Fargate, alerts, cost"],
-    ["analytics", "Analytics", "dashboards, P&L, forecasts"],
-    ["software", "Software Eng", "apps and tools"],
+    ["analytics", "Analytics", "dashboards, P&L, reports"],
+    ["data_science", "Data Science", "forecasts, demand models"],
   ];
   const AREA_LABEL = Object.fromEntries(AREAS.map(a => [a[0], a[1]]));
   const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];

@@ -65,7 +65,7 @@
     },
     {
       "section": "win",
-      "area": "analytics",
+      "area": "data_science",
       "title": "Demand plan with units and revenue",
       "detail": "Demand plan shows units and revenue, with a monthly forecast snapshot.",
       "date": "2026-10-23"

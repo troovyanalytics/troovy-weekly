@@ -51,7 +51,7 @@
     },
     {
       "section": "win",
-      "area": "analytics",
+      "area": "data_science",
       "title": "Growth for Blinkit, Swiggy and Zepto",
       "detail": "Quick-commerce growth now uses a 30-day window (their PO data starts in August) and only ever raises the plan. December's quick-commerce forecast is up 3.7%.",
       "date": "2026-11-03"
@@ -86,7 +86,7 @@
     },
     {
       "section": "adhoc",
-      "area": "analytics",
+      "area": "data_science",
       "date": "2026-11-03",
       "title": "Demand projection by channel and warehouse",
       "detail": "Two dashboard cards now show the last 3 months, the current month and the next 3 months, like the other planning cards."
@@ -100,14 +100,14 @@
     },
     {
       "section": "adhoc",
-      "area": "software",
+      "area": "engineering",
       "date": "2026-11-03",
       "title": "Costing web app design for the COO",
       "detail": "Designed a BOM and product-costing web app with 6 roles (NPD, commercial, procurement, quality, admin) that writes straight to the database."
     },
     {
       "section": "adhoc",
-      "area": "software",
+      "area": "engineering",
       "date": "2026-11-03",
       "title": "Budget tracker requirements",
       "detail": "Requirements and approach for a budget tracker: 8 teams log spend against Finance budgets, with Founder and Finance Head approval when over budget."
@@ -142,14 +142,14 @@
     },
     {
       "section": "win",
-      "area": "analytics",
+      "area": "data_science",
       "date": "2026-11-04",
       "title": "Quick-commerce demand history back to April",
       "detail": "April to July quick-commerce demand now comes from Uniware B2B sale orders, from before the Fill Rate sheet started, so the forecast has more history to learn from."
     },
     {
       "section": "win",
-      "area": "software",
+      "area": "engineering",
       "date": "2026-11-05",
       "title": "Costing app: main screens built",
       "detail": "Costing screen, raw/packing material Excel upload with preview and duplicate checks, a warning when a rate moves more than 30%, and a home dashboard."
@@ -170,7 +170,7 @@
     },
     {
       "section": "adhoc",
-      "area": "analytics",
+      "area": "data_science",
       "date": "2026-11-04",
       "title": "Demand forecast formula written up",
       "detail": "The forecast formula step by step with a worked example and simulations."
@@ -184,7 +184,7 @@
     },
     {
       "section": "adhoc",
-      "area": "software",
+      "area": "engineering",
       "date": "2026-11-06",
       "title": "Own customer app: groundwork",
       "detail": "Plan to move the customer app from the third-party builder to our own app on the same store listing. D-U-N-S registration for the developer accounts started."
@@ -192,14 +192,14 @@
   ],
   "upcoming": [
     {
-      "area": "software",
+      "area": "engineering",
       "when": "Fri 13 Nov",
       "status": "in progress",
       "title": "Costing web app, first version",
       "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load."
     },
     {
-      "area": "analytics",
+      "area": "data_science",
       "when": "This week",
       "status": "in progress",
       "title": "Demand projection model: new logic",
@@ -234,7 +234,7 @@
       "detail": "Check the first real calls against the Ozonetel dashboard, then switch on the no-callback alarm."
     },
     {
-      "area": "software",
+      "area": "engineering",
       "when": "In progress",
       "status": "in progress",
       "title": "Own customer app",

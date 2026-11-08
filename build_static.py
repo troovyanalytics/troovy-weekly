@@ -15,7 +15,7 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 SECTIONS = {"big", "win", "adhoc"}
-AREAS = {"engineering", "devops", "analytics", "software"}
+AREAS = {"engineering", "devops", "analytics", "data_science"}
 STATUSES = {"planned", "in progress", "blocked", "waiting", "done"}
 SKELETON = (
     '<!doctype html><html lang="en"><head><meta charset="utf-8">'

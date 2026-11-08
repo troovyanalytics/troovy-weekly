@@ -24,7 +24,7 @@ You can also edit a week file straight on github.com. Saving it there is a push 
      "title": "Short title", "detail": "One or two lines on why it matters."}
   ],
   "upcoming": [
-    {"area": "software", "when": "Fri 6 Nov", "status": "in progress",
+    {"area": "engineering", "when": "Fri 6 Nov", "status": "in progress",
      "title": "Short title", "detail": "One line."}
   ]
 }
@@ -33,7 +33,7 @@ You can also edit a week file straight on github.com. Saving it there is a push 
 | Field | Allowed values |
 |---|---|
 | `section` | `big` (big achievement), `win`, `adhoc` (a request that came in during the week) |
-| `area` | `engineering` (pipelines, syncs, data models), `devops` (AWS, Fargate, alerts, cost), `analytics` (dashboards, P&L, forecasts), `software` (apps and tools) |
+| `area` | `engineering` (Software Engineering: pipelines, syncs, apps, tools), `devops` (AWS, Fargate, alerts, cost), `analytics` (dashboards, P&L, reports), `data_science` (forecasts, demand models) |
 | `status` (upcoming only) | `planned`, `in progress`, `blocked`, `waiting`, `done` |
 
 The file name must be the Monday (`start`), and `end` the Sunday after it. The build stops

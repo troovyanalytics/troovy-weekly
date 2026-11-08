@@ -23,7 +23,7 @@
   "items": [
     {
       "section": "win",
-      "area": "analytics",
+      "area": "data_science",
       "title": "Stock-outs no longer shrink the forecast",
       "detail": "Days a product was out of stock are left out of its daily rate and growth, so a stock-out isn't read as falling demand (Chocolate Cookies in September).",
       "date": "2026-10-26"
@@ -37,7 +37,7 @@
     },
     {
       "section": "big",
-      "area": "analytics",
+      "area": "data_science",
       "title": "Per-SKU safety stock in the plan",
       "detail": "Plan units = forecast + a buffer from each SKU's own week-to-week swings (90% service level). In the backtest it ran short 3.8% of the time, against about 4.4% for a flat buffer.",
       "date": "2026-10-29"
@@ -100,14 +100,14 @@
     },
     {
       "section": "adhoc",
-      "area": "software",
+      "area": "engineering",
       "date": "2026-10-30",
       "title": "Shopify admin app: stack proposal",
       "detail": "The manager asked for an in-house app inside the Shopify admin. Proposed a custom embedded Shopify app that shows our stock, shipment and demand data on order and product pages."
     },
     {
       "section": "adhoc",
-      "area": "analytics",
+      "area": "data_science",
       "date": "2026-10-29",
       "title": "Demand history back to January",
       "detail": "Checked how far back clean demand goes for projections, and found which months need an older warehouse added."
