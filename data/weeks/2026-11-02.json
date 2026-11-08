@@ -188,6 +188,13 @@
       "date": "2026-11-06",
       "title": "Own customer app: groundwork",
       "detail": "Plan to move the customer app from the third-party builder to our own app on the same store listing. D-U-N-S registration for the developer accounts started."
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-08",
+      "title": "COGS sheet sync running again",
+      "detail": "The hourly COGS sheet sync had stopped on the new Diwali hamper, which is costed in the sheet but doesn't exist in Unicommerce. The sync now skips that one combo with a warning, and every other check still runs. No cost was missed: nothing changed in the sheet while it was stopped."
     }
   ],
   "upcoming": [
@@ -211,13 +218,6 @@
       "status": "planned",
       "title": "Demand dashboard: lost sales, forecast accuracy, KPI tiles",
       "detail": "The next cards on the planning dashboard after Plan vs Stock."
-    },
-    {
-      "area": "analytics",
-      "when": "When the SKU exists",
-      "status": "blocked",
-      "title": "Diwali hamper into the COGS sync",
-      "detail": "The COGS sheet sync is on hold until the new combo is created in Unicommerce."
     },
     {
       "area": "devops",
