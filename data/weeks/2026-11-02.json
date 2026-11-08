@@ -1,23 +1,23 @@
 {
   "start": "2026-11-02",
   "end": "2026-11-08",
-  "headline": "Real product costs in the P&L and a production plan that stays fixed",
+  "headline": "Real product costs in the P&L, faster dashboards and call data from Ozonetel",
   "stats": [
     {
       "label": "real COGS of net sales, last 30 days (was assumed 32%)",
       "value": "42.5%"
     },
     {
-      "label": "of plan frozen on the 1st for raw material",
-      "value": "3 months"
-    },
-    {
       "label": "December quick-commerce forecast, now with growth",
       "value": "+3.7%"
     },
     {
-      "label": "demand dashboard cards updated",
-      "value": "7"
+      "label": "Category P&L base card load time (was 5.4 s)",
+      "value": "0.2 s"
+    },
+    {
+      "label": "dashboards moved to fast reporting tables",
+      "value": "6"
     }
   ],
   "items": [
@@ -125,6 +125,69 @@
       "date": "2026-11-03",
       "title": "Architecture page refreshed",
       "detail": "The platform architecture page now shows all 24 live schedules, the B2B sources and the Google Sheets inputs."
+    },
+    {
+      "section": "big",
+      "area": "engineering",
+      "date": "2026-11-05",
+      "title": "Ozonetel call reports pipeline live",
+      "detail": "Ozonetel sends each call's details to our endpoint and a loader saves them to the database every 15 minutes. Tested end to end; real calls start once Ozonetel turns the callback on."
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "date": "2026-11-06",
+      "title": "Dashboards read prepared reporting tables",
+      "detail": "D2C P&L, OPS, B2B Fill Rate, PO Lifecycle, Master Inventory and Platform DN now read ready-made reporting tables instead of raw data. The Category P&L base card went from 5.4 s to 0.2 s with the same rows."
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "date": "2026-11-04",
+      "title": "Quick-commerce demand history back to April",
+      "detail": "April to July quick-commerce demand now comes from Uniware B2B sale orders, from before the Fill Rate sheet started, so the forecast has more history to learn from."
+    },
+    {
+      "section": "win",
+      "area": "software",
+      "date": "2026-11-05",
+      "title": "Costing app: main screens built",
+      "detail": "Costing screen, raw/packing material Excel upload with preview and duplicate checks, a warning when a rate moves more than 30%, and a home dashboard."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-06",
+      "title": "Broken Metabase filters fixed",
+      "detail": "Filters that errored on several cards work again, applied with a script so the change is repeatable."
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-06",
+      "title": "24 unused dbt views removed",
+      "detail": "Views that no dashboard or model reads were dropped, so each run builds less."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-04",
+      "title": "Demand forecast formula written up",
+      "detail": "The forecast formula step by step with a worked example and simulations."
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-04",
+      "title": "Weekly page live on GitHub Pages",
+      "detail": "This page now builds and goes live on every push, with one fixed link."
+    },
+    {
+      "section": "adhoc",
+      "area": "software",
+      "date": "2026-11-06",
+      "title": "Own customer app: groundwork",
+      "detail": "Plan to move the customer app from the third-party builder to our own app on the same store listing. D-U-N-S registration for the developer accounts started."
     }
   ],
   "upcoming": [
@@ -157,13 +220,6 @@
       "detail": "The COGS sheet sync is on hold until the new combo is created in Unicommerce."
     },
     {
-      "area": "engineering",
-      "when": "This week",
-      "status": "in progress",
-      "title": "Weekly page on GitHub Pages",
-      "detail": "This page builds and goes live on every push, with one fixed link."
-    },
-    {
       "area": "devops",
       "when": "~9 Nov",
       "status": "planned",
@@ -171,11 +227,18 @@
       "detail": "Terminate the stopped EC2 server after its snapshot, now that nothing runs on it."
     },
     {
-      "area": "software",
-      "when": "Waiting on manager",
+      "area": "engineering",
+      "when": "Waiting on Ozonetel",
       "status": "waiting",
-      "title": "Shopify admin app",
-      "detail": "Starts once the feature list is agreed."
+      "title": "First real Ozonetel calls",
+      "detail": "Check the first real calls against the Ozonetel dashboard, then switch on the no-callback alarm."
+    },
+    {
+      "area": "software",
+      "when": "In progress",
+      "status": "in progress",
+      "title": "Own customer app",
+      "detail": "Developer accounts after D-U-N-S, then the store listing transfer."
     }
   ]
 }
