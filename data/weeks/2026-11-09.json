@@ -4,8 +4,8 @@
   "headline": "Old sync server retired: every pipeline now runs on Fargate, with tighter access and lower cost",
   "stats": [
     {
-      "label": "saved every month on AWS",
-      "value": "~₹730"
+      "label": "lower monthly AWS bill",
+      "value": "6%"
     },
     {
       "label": "old server resources removed",
@@ -28,8 +28,8 @@
       "title": "Old sync server retired",
       "detail": "Every data pipeline (Unicommerce, Shopify, ClickPost, Meta, Gmail reports, Ozonetel and the dbt models) has run on ECS Fargate for 3 weeks without the old server, so the server itself is now removed: the machine, its fixed IP address, its access role, 5 stored keys and 2 alarms, 35 items in all. A full backup of its disk is kept until February 2027. All pipelines were checked before and after, and kept running normally.",
       "explain": {
-        "simple": "We used to run all our data jobs on one always-on computer in AWS. Over the last few weeks every job moved to a newer setup that only starts a machine when a job needs to run.\n\nThe old computer was switched off three weeks ago and nothing needed it, so now it is removed completely. That saves about ₹730 every month, and there is one less machine to look after and keep secure. A backup copy is kept for a few months, just in case.",
-        "technical": "Terraform removal of module \"uniware_sync\" (EC2 instance, Elastic IP, security group, IAM role + instance profile), the 4 deploy-key modules, 6 role policies attached to that role and 2 CloudWatch alarms: plan 0 add / 1 change / 35 destroy. The one change drops the box's two IPs from the RDS security group; office, Metabase and Fargate rules unchanged. EBS snapshot kept outside the module (delete ~2027-02). Verified after apply: instance terminated, role gone, Uniware/dbt/ClickPost/Ozonetel runs all SUCCESS."
+        "simple": "We used to run all our data jobs on one always-on computer in AWS. Over the last few weeks every job moved to a newer setup that only starts a machine when a job needs to run.\n\nThe old computer was switched off three weeks ago and nothing needed it, so now it is removed completely. That brings the monthly AWS bill down by about 6%, and there is one less machine to look after and keep secure. A backup copy is kept for a few months, just in case.",
+        "technical": "Terraform removal of module \"uniware_sync\" (EC2 instance, Elastic IP, security group, IAM role + instance profile), the 4 deploy-key modules, 6 role policies attached to that role and 2 CloudWatch alarms: plan 0 add / 1 change / 35 destroy. The one change drops the box's two IPs from the RDS security group; office, Metabase and Fargate rules unchanged. EBS snapshot kept outside the module (delete ~2027-02). Verified after apply: instance terminated, role gone, Uniware/dbt/ClickPost/Ozonetel runs all SUCCESS. Saving: about $8.6 a month (disk, public IP, 5 secrets, 2 alarms) of a ~$135 monthly usage bill (Cost Explorer, before credits and tax)."
       }
     },
     {
