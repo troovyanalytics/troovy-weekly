@@ -1,0 +1,137 @@
+{
+  "start": "2026-11-09",
+  "end": "2026-11-15",
+  "headline": "Old sync server retired: every pipeline now runs on Fargate, with tighter access and lower cost",
+  "stats": [
+    {
+      "label": "saved every month on AWS",
+      "value": "~₹730"
+    },
+    {
+      "label": "old server resources removed",
+      "value": "35"
+    },
+    {
+      "label": "old GitHub access keys removed",
+      "value": "7"
+    },
+    {
+      "label": "data pipelines checked, all running",
+      "value": "11"
+    }
+  ],
+  "items": [
+    {
+      "section": "big",
+      "area": "devops",
+      "date": "2026-11-12",
+      "title": "Old sync server retired",
+      "detail": "Every data pipeline (Unicommerce, Shopify, ClickPost, Meta, Gmail reports, Ozonetel and the dbt models) has run on ECS Fargate for 3 weeks without the old server, so the server itself is now removed: the machine, its fixed IP address, its access role, 5 stored keys and 2 alarms, 35 items in all. A full backup of its disk is kept until February 2027. All pipelines were checked before and after, and kept running normally.",
+      "explain": {
+        "simple": "We used to run all our data jobs on one always-on computer in AWS. Over the last few weeks every job moved to a newer setup that only starts a machine when a job needs to run.\n\nThe old computer was switched off three weeks ago and nothing needed it, so now it is removed completely. That saves about ₹730 every month, and there is one less machine to look after and keep secure. A backup copy is kept for a few months, just in case.",
+        "technical": "Terraform removal of module \"uniware_sync\" (EC2 instance, Elastic IP, security group, IAM role + instance profile), the 4 deploy-key modules, 6 role policies attached to that role and 2 CloudWatch alarms: plan 0 add / 1 change / 35 destroy. The one change drops the box's two IPs from the RDS security group; office, Metabase and Fargate rules unchanged. EBS snapshot kept outside the module (delete ~2027-02). Verified after apply: instance terminated, role gone, Uniware/dbt/ClickPost/Ozonetel runs all SUCCESS."
+      }
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "date": "2026-11-12",
+      "title": "Access cleanup: Google Sheets and GitHub",
+      "detail": "Read access to the reference Google Sheets is now limited to exactly the two pipelines that use them, and 7 old GitHub access keys that only the retired server used were removed from 6 repositories. Sheets sync and every pipeline keep running as before.",
+      "explain": {
+        "simple": "Fewer doors left open: only the two jobs that actually read our Google Sheets can still read them, and old keys that let the retired server download our code are deleted.",
+        "technical": "prod-gcp: Workload Identity attribute condition and service-account bindings now list only the uniware-sync and troovy-analytics Fargate task roles (plan afterwards: no changes). GitHub: all read-only deploy keys deleted; 0 deploy keys left across the 9 org repositories."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "devops",
+      "date": "2026-11-12",
+      "title": "Health check of all data pipelines",
+      "detail": "Checked the last 10 days of all 11 data pipelines: every one is running on schedule. The few failed runs were short outages on the Google or Unicommerce side that the next run picked up on its own, plus the COGS sheet sync that was already fixed on 8 Nov.",
+      "explain": {
+        "simple": "A routine check that all our data is still arriving on time. It is, and nothing was missed.",
+        "technical": "ops.*_runs for all 11 pipelines: last run and last success today for each; Uniware 4 failed runs out of ~61k (Google Sheets / Unicommerce 503s, connection reset), each followed by a successful run; staging_core failures only 3-8 Nov (COGS sheet), 0 since."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-12",
+      "title": "Ozonetel call data: connection set up",
+      "detail": "Ozonetel's team connected their call system to our receiver for the inbound line. One small adjustment to the receiver address was agreed with them, and call records will start arriving once it is in place. Our side was tested again and is ready.",
+      "explain": {
+        "simple": "Ozonetel has started sending call details to us. One small setting is being updated on their side, and after that every call will show up in our data automatically.",
+        "technical": "Callback configured by Ozonetel for the inbound campaign; the receiver address needs one character changed, shared with their support. Our Lambda URL re-tested (HTTP 200), loader running every 15 min with 0 errors. Next: verify the first real call against the Ozonetel dashboard, then turn on the no-callback alarm."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-12",
+      "title": "Docs updated for the new setup",
+      "detail": "The infrastructure and Meta pipeline docs now describe the Fargate setup only, with the right rollback steps.",
+      "explain": {
+        "simple": "The written instructions now match how things actually run today.",
+        "technical": "Infrastructure docs and Terraform comments, meta-sync docs and README: EC2 rollback removed, rollback = previous image tag + apply."
+      }
+    }
+  ],
+  "upcoming": [
+    {
+      "area": "engineering",
+      "when": "Fri 13 Nov",
+      "status": "in progress",
+      "title": "Costing web app, first version",
+      "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load.",
+      "explain": {
+        "simple": "The first usable version of the costing app: teams enter product recipes and see the cost and margin of each pack.",
+        "technical": "v0 scope: BOM entry, cost-per-pack and margin views for 6 roles, Excel bulk import for the first load."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "After Ozonetel's update",
+      "status": "waiting",
+      "title": "First real Ozonetel calls in the data",
+      "detail": "Check the first calls against the Ozonetel dashboard, then add calls next to chats in the customer complaints dashboard.",
+      "explain": {
+        "simple": "Once calls start arriving, we check they match Ozonetel's own screen, then show calls and chats together in one complaints view.",
+        "technical": "Verify raw.ozonetel_calls vs the Ozonetel dashboard, enable the no-callback alarm, rotate the callback token, add a calls block to the complaints card."
+      }
+    },
+    {
+      "area": "data_science",
+      "when": "This week",
+      "status": "in progress",
+      "title": "Demand projection model: new logic",
+      "detail": "Reworking the projection model: base daily rate from a 30/60-day blend, per-channel growth, and checking the safety-stock Z-score against past months.",
+      "explain": {
+        "simple": "Improving how the forecast works out expected sales, so plans are closer to what actually sells.",
+        "technical": "Base daily rate from a 30/60-day blend, per-channel growth, and a backtest of the safety-stock Z-score against past months."
+      }
+    },
+    {
+      "area": "analytics",
+      "when": "Next week",
+      "status": "planned",
+      "title": "Demand dashboard: lost sales, forecast accuracy, KPI tiles",
+      "detail": "The next cards on the planning dashboard after Plan vs Stock.",
+      "explain": {
+        "simple": "New cards that show sales missed because of stock-outs, how close past forecasts were, and headline numbers at a glance.",
+        "technical": "Next Metabase cards on dashboard 12: lost-sales estimate, forecast vs actual accuracy, KPI tiles."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "In progress",
+      "status": "in progress",
+      "title": "Own customer app",
+      "detail": "Developer accounts after D-U-N-S, then the store listing transfer.",
+      "explain": {
+        "simple": "Next steps: create our own app store accounts, then move the existing app listing to them.",
+        "technical": "Developer org accounts after D-U-N-S, then the store listing transfer."
+      }
+    }
+  ]
+}
