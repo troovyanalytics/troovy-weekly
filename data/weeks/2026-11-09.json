@@ -1,7 +1,7 @@
 {
   "start": "2026-11-09",
   "end": "2026-11-15",
-  "headline": "Old sync server retired: every pipeline now runs on Fargate, with tighter access and lower cost",
+  "headline": "Old sync server retired, TrooVault costing app demoed, and a security review of the data platform",
   "stats": [
     {
       "label": "lower monthly AWS bill",
@@ -44,6 +44,61 @@
       }
     },
     {
+      "section": "big",
+      "area": "engineering",
+      "date": "2026-11-13",
+      "title": "TrooVault costing app: first version built and demoed to the COO",
+      "detail": "The costing app now has a name, TrooVault, and its first full version was demoed on 13 Nov. It has a login for each role (founders, NPD category managers, procurement, tech), a weekly raw and packing material buy list with cost, products taken from our active Shopify listings, and a drag-and-drop board for assigning categories. Recipes are locked with a key per category, so each NPD manager sees only their own category's recipes. There is also a built-in team chat (one-on-one and groups), an activity log, and an in-app guide for every role.",
+      "explain": {
+        "simple": "One app where the team enters product recipes and immediately sees the cost and margin of each pack. Recipes are our most private data, so they are locked: founders see everything, each category manager sees only their own category, and procurement sees only the total quantities it has to buy each week.",
+        "technical": "Next.js + Postgres. Role-based access with a View-as toggle for founders and tech. Recipe encryption happens in the browser: a personal key per user and category keys handed out with a key-code check, plus a recovery kit; the server stores only sealed recipes and RM/PM totals, so costing runs on the totals without the recipe in clear text. Team chat with sent/delivered/seen ticks, a typing indicator and an unread badge; recipe groups are locked with the category key. Every change is written to the audit log. Products come from the active Shopify listings in the production DB, read-only."
+      }
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "date": "2026-11-14",
+      "title": "Security review of the data platform",
+      "detail": "Reviewed the AWS account, the database and all pipelines for security. This added account activity logging and automatic threat detection, with alerts going to the same email as pipeline failures, turned on two-step login for the admin account, and removed an unused network rule. The database checks (encryption, backups, secure connections only) all passed.",
+      "explain": {
+        "simple": "A check of how well our data is protected. Every action in our AWS account is now recorded, and AWS watches for anything suspicious and emails us if it sees something. The database was already encrypted and backed up.",
+        "technical": "CloudTrail multi-region trail (1-year S3 retention) and GuardDuty (RDS login, S3 and Lambda protection) via Terraform, with findings of severity 4 or higher sent to the pipeline-alerts SNS topic through EventBridge. MFA on the IAM admin user; an unused security group deleted. RDS checked: encrypted, deletion protection, 7-day backups, SSL forced, scram-sha-256."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-12",
+      "title": "Customer complaints month on month (new card)",
+      "detail": "A new Metabase card with complaints per 1,000 orders, refund rate, the top 3 complaint reasons and CSAT for each month. Complaint data starts on 1 Aug 2026, so the card covers August onwards.",
+      "explain": {
+        "simple": "One row per month showing how many orders led to a complaint, how many were refunded, and what customers complained about most.",
+        "technical": "Card 240: KwikEngage tickets assigned to an agent with a complaint tag, against Shopify orders and refunds per IST month; top 3 reasons by tag; CSAT from the ratings table."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-12",
+      "title": "XpressBees vs Delhivery month to date, by warehouse",
+      "detail": "A query comparing the two couriers this month for each warehouse: orders, delivered, RTO % and NDR %.",
+      "explain": {
+        "simple": "A quick side-by-side of our two main couriers for each warehouse this month.",
+        "technical": "reporting.ops_report_orders, orders created this month (IST), cancelled excluded; RTO % = RTO / (delivered + RTO); one row per facility and courier."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-12",
+      "title": "Meta ads cards open on this month",
+      "detail": "The two Meta ads cards now show the current month by default.",
+      "explain": {
+        "simple": "The Meta ads numbers open on this month straight away, without picking dates.",
+        "technical": "Cards 230 and 231: date filter default changed to This month."
+      }
+    },
+    {
       "section": "adhoc",
       "area": "devops",
       "date": "2026-11-12",
@@ -58,11 +113,11 @@
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-12",
-      "title": "Ozonetel call data: connection set up",
-      "detail": "Ozonetel's team connected their call system to our receiver for the inbound line. One small adjustment to the receiver address was agreed with them, and call records will start arriving once it is in place. Our side was tested again and is ready.",
+      "title": "Ozonetel call data now flowing",
+      "detail": "Ozonetel's team connected their call system to our receiver for the inbound line, and call records now arrive automatically: about 1,280 calls were in the database by 14 Nov.",
       "explain": {
-        "simple": "Ozonetel has started sending call details to us. One small setting is being updated on their side, and after that every call will show up in our data automatically.",
-        "technical": "Callback configured by Ozonetel for the inbound campaign; the receiver address needs one character changed, shared with their support. Our Lambda URL re-tested (HTTP 200), loader running every 15 min with 0 errors. Next: verify the first real call against the Ozonetel dashboard, then turn on the no-callback alarm."
+        "simple": "Every customer call on the inbound line now shows up in our data by itself, a few minutes after the call.",
+        "technical": "Ozonetel callback to our Lambda receiver, files in S3, loader every 15 min into raw.ozonetel_calls; 1,284 calls by 14 Nov, 0 loader errors."
       }
     },
     {
@@ -81,7 +136,7 @@
     {
       "area": "engineering",
       "when": "Fri 13 Nov",
-      "status": "in progress",
+      "status": "done",
       "title": "Costing web app, first version",
       "detail": "BOM entry, cost per pack and margin views for the 6 roles, with an Excel upload for the first load.",
       "explain": {
@@ -92,7 +147,7 @@
     {
       "area": "engineering",
       "when": "After Ozonetel's update",
-      "status": "waiting",
+      "status": "done",
       "title": "First real Ozonetel calls in the data",
       "detail": "Check the first calls against the Ozonetel dashboard, then add calls next to chats in the customer complaints dashboard.",
       "explain": {

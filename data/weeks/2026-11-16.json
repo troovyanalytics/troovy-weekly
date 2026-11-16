@@ -1,0 +1,63 @@
+{
+  "start": "2026-11-16",
+  "end": "2026-11-22",
+  "headline": "This week: our own customer app, and taking Sajid's secondary sales automation live",
+  "items": [],
+  "upcoming": [
+    {
+      "area": "engineering",
+      "when": "This week",
+      "status": "in progress",
+      "title": "Own Troovy customer app",
+      "detail": "Building our own customer app on our Shopify store to replace the current subscription-based app. Current users will get it as a normal update to the same store listing.",
+      "explain": {
+        "simple": "Today our shopping app runs on a paid outside service that we cannot change. We are building our own app, so we can add the features we want and stop paying the monthly fee. People who already have the app will just get an update.",
+        "technical": "Expo (React Native, managed workflow) on the Shopify Storefront API via a Headless channel, so app orders are tagged. Cloud builds with EAS. Store listing moves to our own Apple and Google Play organization accounts after the D-U-N-S number; the old subscription is cancelled only after every user is on the new app."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "This week",
+      "status": "in progress",
+      "title": "Secondary sales automation by Sajid: review and go-live",
+      "detail": "Sajid built an automation tool for secondary sales. It gets reviewed and deployed on our data platform, so it runs on a schedule alongside the other pipelines, with the same alerts and health checks.",
+      "explain": {
+        "simple": "Sajid made a tool that does the secondary sales work automatically. We check it together and then put it on our servers, so it runs by itself and tells us if anything goes wrong.",
+        "technical": "Code review, then the standard pipeline setup: container image, scheduled ECS Fargate task, secrets from Secrets Manager, run status in the database, failure alerts on the existing SNS topic. First runs verified against Sajid's own output."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "Next",
+      "status": "planned",
+      "title": "TrooVault: updates before go-live",
+      "detail": "Library updates and security settings, then hosting it so the team can use it.",
+      "explain": {
+        "simple": "Final checks and updates before the costing app is opened to the team.",
+        "technical": "Framework and auth library upgrades, security headers, rate limits on login and unlock, longer passphrases; then hosting on AWS."
+      }
+    },
+    {
+      "area": "analytics",
+      "when": "Planned",
+      "status": "planned",
+      "title": "Calls next to chats in the complaints dashboard",
+      "detail": "Now that Ozonetel calls arrive, show calls and chats together in one complaints view.",
+      "explain": {
+        "simple": "One place to see every customer complaint, whether it came by chat or by phone.",
+        "technical": "Add an Ozonetel calls block to the complaints card, same columns as the KwikEngage tickets."
+      }
+    },
+    {
+      "area": "analytics",
+      "when": "Planned",
+      "status": "planned",
+      "title": "Demand dashboard: lost sales, forecast accuracy, KPI tiles",
+      "detail": "The next cards on the planning dashboard after Plan vs Stock.",
+      "explain": {
+        "simple": "New cards that show sales missed because of stock-outs, how close past forecasts were, and headline numbers at a glance.",
+        "technical": "Next Metabase cards on dashboard 12: lost-sales estimate, forecast vs actual accuracy, KPI tiles."
+      }
+    }
+  ]
+}
