@@ -111,6 +111,50 @@
       "date": "2026-10-29",
       "title": "Demand history back to January",
       "detail": "Checked how far back clean demand goes for projections, and found which months need an older warehouse added."
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-26",
+      "title": "Box and freight analysis",
+      "detail": "Box Mapping 2 what-if (freight falls from 15.49% to 11.81% of Net Sales with the new boxes and chips at Rs 100 MRP), chips freight by units per order, orders per box by category, a cross-category units table, and freight per box and courier.",
+      "explain": {
+        "simple": "Shows how much we would save on shipping with the new box sizes, and which boxes and couriers cost the most.",
+        "technical": "Cards 201-204 + freight by box x courier (forward, COD, RTO); Shopify dispatched orders, support orders excluded; rate-card freight as % of Net Sales; what-if is read-only."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-27",
+      "title": "Category P&L by period and DOD P&L on actual RTO",
+      "detail": "Category P&L for Yesterday, Last 7 Days, MTD and Last 30 Days side by side, and the day-on-day P&L, both on actual order-level RTO.",
+      "explain": {
+        "simple": "The P&L for the periods the team checks most, with real returns instead of an estimate.",
+        "technical": "reporting.shopify_pnl_daily; RTO Orders = actual RTO + estimated share still in transit; Post-RTO Orders = Orders - RTO Orders."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-27",
+      "title": "Return inward tracking by courier",
+      "detail": "Per courier: dispatched orders, returns started and how many have reached the warehouse, as %.",
+      "explain": {
+        "simple": "Tracks whether returned parcels actually come back to our warehouse.",
+        "technical": "Shopify; returns initiated = Clickpost RTO-* or Uniware RETURN_EXPECTED/RETURNED/RETURN_ACKNOWLEDGED; inwarded = RETURNED/RETURN_ACKNOWLEDGED; card 208."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-27",
+      "title": "IDP B2C warehouse: day-on-day out-of-stock SKUs",
+      "detail": "Each day, the SKUs with no good stock at the IDP B2C warehouse that sold there in the last 30 days, with days out of stock and daily run rate.",
+      "explain": {
+        "simple": "Which selling products ran out at the IDP warehouse, and for how long.",
+        "technical": "Daily Uniware shelfwise snapshot (history from 14 Oct), GOOD_INVENTORY at IDP_B2C; sales from staging.uniware_sale_order_items_clean; optional month filter."
+      }
     }
   ],
   "upcoming": []

@@ -97,6 +97,17 @@
       "title": "Last cron server stopped",
       "detail": "With every job on Fargate, the old sync server was snapshotted and stopped. That saves about $1 a day in compute.",
       "date": "2026-10-23"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-21",
+      "title": "Month-on-month metric cards per category",
+      "detail": "Five MoM cards (Chips, Ketchup + Choco spread, Milk Mix, Others, Total) with metrics as rows and months as columns, plus an order count trend for new vs repeat customers.",
+      "explain": {
+        "simple": "Each category's key numbers month by month, in the same layout as the manager's sheet.",
+        "technical": "Cards 143, 170-173 from one SQL template; card 174 order count trend New vs Repeat with the same filters as card 142."
+      }
     }
   ],
   "upcoming": []

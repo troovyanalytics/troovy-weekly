@@ -72,6 +72,28 @@
       "title": "Deadlocks fixed",
       "detail": "Unicommerce batch writes no longer deadlock each other.",
       "date": "2026-10-08"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-06",
+      "title": "Courier hub to first delivery attempt time",
+      "detail": "Courier-wise time from reaching the destination hub to the first out-for-delivery, for last month, this month so far and the last 7 days side by side.",
+      "explain": {
+        "simple": "How long each courier takes to send a parcel out for delivery once it reaches the local hub.",
+        "technical": "Clickpost scans, Shopify; hub-in to OFD1 TAT per courier for previous month / MTD / last 7 days; TOTAL row via GROUPING SETS (same formula over all orders)."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-06",
+      "title": "Weekly first-attempt delivery rate, COD vs Prepaid",
+      "detail": "First-attempt success rate (FASR) by courier and week of the month, COD and prepaid separately, with an all-couriers total.",
+      "explain": {
+        "simple": "How often each courier delivers on the first try, week by week.",
+        "technical": "Shopify; rows = courier x payment mode + All couriers; columns W1..W5 + month + attempts; {{month}} date variable, default = yesterday's month."
+      }
     }
   ],
   "upcoming": []

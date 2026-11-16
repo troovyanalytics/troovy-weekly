@@ -72,6 +72,72 @@
       "title": "One owner per table",
       "detail": "Cleanup finished: every table has a single owner and scheduling moved to dbt.",
       "date": "2026-10-16"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-12",
+      "title": "Courier selection deck: 4 questions",
+      "detail": "COD vs prepaid RTO (COD's RTO is about 7x prepaid's), each courier's COD mix, the scoring weight scenarios and a pincode lookup that names the best courier for COD and for prepaid orders.",
+      "explain": {
+        "simple": "Explains why couriers are now ranked separately for COD and prepaid orders, and lets ops pick a courier for any pincode.",
+        "technical": "Last 90 days, closed shipments, Shopify; couriers with 500+ shipments; pincode lookup reads reporting.courier_scoring (0.10 cost + 0.30 NDR + 0.50 RTO + 0.10 speed); weight scenarios are the static output of the 2026-10-12 simulation."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-12",
+      "title": "Customer support orders with the previous order",
+      "detail": "Every order the support team created, next to the same customer's previous order, with a flag for which ones are replacements.",
+      "explain": {
+        "simple": "Lets us see what each support-created order was for.",
+        "technical": "staging.orders, Shopify, 'Customer support' tag; previous order of the same customer; is_replacement = discount reason mentions 'previous'."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-12",
+      "title": "Shopify SKU run-rate and projection",
+      "detail": "SKU-wise daily sales run-rate over a chosen window, projected to a full month, at inventory SKU level (combos split into their parts).",
+      "explain": {
+        "simple": "How many units of each product we will sell this month at the current pace.",
+        "technical": "Component SKU = product_master.internal_code; units / days in window x projection days; start_date, end_date, projection_days variables."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-13",
+      "title": "Retention cohort by category",
+      "detail": "Monthly retention cohorts in customer counts and %, overall and per category, last 13 months, in the same layout as the September retention sheet.",
+      "explain": {
+        "simple": "Of the customers who first bought in a month, how many came back in each later month, per category.",
+        "technical": "Shopify; cohort = first-order month; m0..m12 counts and % versions kept in step; choco = 3 Shopify product ids."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-14",
+      "title": "Net Sales trend by category, New vs Repeat",
+      "detail": "Net Sales by day, week or month for each category, split new and repeat customers, ready for a line or stacked bar.",
+      "explain": {
+        "simple": "Shows whether each category's sales come from new or returning customers over time.",
+        "technical": "reporting.shopify_pnl_daily_by_category_customer_type; long format, series = category - New/Repeat; card 142."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-15",
+      "title": "Category month on month, New vs Repeat",
+      "detail": "Last 12 complete months per category with a Total row, New and Repeat separately.",
+      "explain": {
+        "simple": "A monthly view of each category for new and returning customers.",
+        "technical": "reporting.shopify_pnl_daily_by_category_customer_type; one row per month x customer type x category + Total; optional customer_type filter."
+      }
     }
   ],
   "upcoming": []

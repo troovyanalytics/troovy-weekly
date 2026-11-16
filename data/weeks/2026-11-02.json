@@ -295,6 +295,28 @@
         "simple": "The hourly update of product costs from the Google Sheet had paused because of one new gift box that is only in the sheet for costing. It now skips that one item and runs normally.\n\nNo cost update was missed: nothing in the sheet changed while it was paused.",
         "technical": "sync_google_sheets.py validation rejected combo CB_DIW2_26 (not in staging.product_master), failing every run. Added IGNORED_COMBOS: its rows are skipped with a warning, its components still count as known codes, all other checks unchanged (PR #40). First run after release: success, 0 COGS changes."
       }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-03",
+      "title": "UTM source and campaign performance",
+      "detail": "Two cards with orders, revenue, prepaid revenue, RTO %, AOV and reversal % by UTM source and by campaign, with a New / Repeat filter.",
+      "explain": {
+        "simple": "Which traffic sources and campaigns bring good orders, not just many orders.",
+        "technical": "GoKwik UTM (from 12 Aug 2026) joined to Shopify orders; one row per utm_source / utm_campaign + Total; cards 230 and 231."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-03",
+      "title": "Category P&L with a New / Repeat filter",
+      "detail": "The D2C category P&L card can now be filtered to new or repeat customers.",
+      "explain": {
+        "simple": "See the category P&L for first-time buyers and returning buyers separately.",
+        "technical": "Card 109 reads reporting.shopify_pnl_daily_by_category_customer_type with a customer_type variable."
+      }
     }
   ],
   "upcoming": [

@@ -65,6 +65,28 @@
       "title": "Roadmap and onboarding guide",
       "detail": "A written data platform roadmap, and a guide for new analytics team members.",
       "date": "2026-09-30"
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-01",
+      "title": "Ops summary with projected RTO",
+      "detail": "Ops summary that counts orders stuck in transit for more than 15 days as RTO, so the RTO % isn't understated for recent weeks.",
+      "explain": {
+        "simple": "Orders stuck for over 15 days are treated as returns, giving a truer RTO number.",
+        "technical": "reporting.ops_report_orders, Shopify; high-aging (>15 days, not delivered) counted as RTO; date field filter, default previous 30 days."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-10-01",
+      "title": "RTO by state, city and pincode, COD vs Prepaid",
+      "detail": "Three queries ranking states, cities and pincodes by RTO %, split COD vs Prepaid. Pincodes are listed only for flagged states (COD RTO above 14% and COD share 15 points above prepaid).",
+      "explain": {
+        "simple": "Shows which places return the most orders, separately for cash-on-delivery and prepaid.",
+        "technical": "reporting.ops_report_orders x staging.orders, Shopify; flagged state = COD RTO% > 14 and COD share % - prepaid share % > 15; min-orders filter on city."
+      }
     }
   ],
   "upcoming": []
