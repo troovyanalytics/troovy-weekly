@@ -47,7 +47,7 @@
       "section": "big",
       "area": "engineering",
       "date": "2026-11-13",
-      "title": "TrooVault costing app: first version built and demoed to the COO",
+      "title": "TrooVault costing app: first version built and demoed to Narendra",
       "detail": "The costing app now has a name, TrooVault, and its first full version was demoed on 13 Nov. It has a login for each role (founders, NPD category managers, procurement, tech), a weekly raw and packing material buy list with cost, products taken from our active Shopify listings, and a drag-and-drop board for assigning categories. Recipes are locked with a key per category, so each NPD manager sees only their own category's recipes. There is also a built-in team chat (one-on-one and groups), an activity log, and an in-app guide for every role.",
       "explain": {
         "simple": "One app where the team enters product recipes and immediately sees the cost and margin of each pack. Recipes are our most private data, so they are locked: founders see everything, each category manager sees only their own category, and procurement sees only the total quantities it has to buy each week.",

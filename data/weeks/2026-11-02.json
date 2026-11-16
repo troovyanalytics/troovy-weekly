@@ -157,7 +157,7 @@
       "section": "adhoc",
       "area": "engineering",
       "date": "2026-11-03",
-      "title": "Costing web app design for the COO",
+      "title": "Costing web app design for Narendra",
       "detail": "Designed a BOM and product-costing web app with 6 roles (NPD, commercial, procurement, quality, admin) that writes straight to the database.",
       "explain": {
         "simple": "A design for a simple web app where each team (product development, commercial, procurement, quality, admin) enters its part of a product's recipe and costs. The app then shows the cost and margin of each pack, so costing is no longer spread across Excel files.",
