@@ -2,7 +2,52 @@
   "start": "2026-11-16",
   "end": "2026-11-22",
   "headline": "This week: our own customer app, and taking Sajid's secondary sales automation live",
-  "items": [],
+  "items": [
+    {
+      "section": "big",
+      "area": "devops",
+      "date": "2026-11-16",
+      "title": "Metabase raw data without customers' personal data",
+      "detail": "41 safe views of the raw tables hide names, phone numbers, emails and addresses, so analysts can explore raw data in Metabase without seeing anyone's personal details. New raw tables and columns are covered automatically.",
+      "explain": {
+        "simple": "People can look at raw data in Metabase, but customers' personal details are hidden. Repeat customers can still be counted, because each phone or email becomes a code that is the same every time but can't be turned back into the number.",
+        "technical": "raw_safe schema: dbt on-run-end macro (prod) builds one view per raw table; columns matching the PII pattern are hidden unless listed in KEEP; email/phone become <column>_key = HMAC-SHA256 of the normalized value with a secret key only staging_user can read; views re-created only when their SQL changes (md5 in the view comment). Follows the security review (PR #41)."
+      }
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "date": "2026-11-16",
+      "title": "Personal data only for those who need it",
+      "detail": "staging.customers can now be read only by the pii_reader role. The analyst_safe and pii_reader groups keep their access to every rebuilt table, which had been dropping on each dbt run.",
+      "explain": {
+        "simple": "Only the people who need customers' personal details can see them, and everyone else's access no longer breaks after each data refresh.",
+        "technical": "dbt +grants now lists all three reader roles; apply_grants had been revoking pii_reader/analyst_safe on ~30 staging/reporting tables (e.g. staging.orders) at every rebuild (PRs #41, #42)."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-16",
+      "title": "dbt runs locally on a Mac",
+      "detail": "The dbt run script now works on a Mac too, and the safe views show a readable description in Metabase.",
+      "explain": {
+        "simple": "Small fixes so the data refresh can be run from a laptop and Metabase shows what each safe table is.",
+        "technical": "run_lock.sh: coproc behind eval, lock skipped on bash < 4 (macOS 3.2); raw_safe view comment = readable Metabase table description (PR #43)."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-16",
+      "title": "Weekly page: past adhoc work added",
+      "detail": "17 adhoc queries from 28 Sep to 2 Nov (RTO, courier selection, freight, P&L, retention, UTM) are now listed in the weeks they were done.",
+      "explain": {
+        "simple": "Earlier one-off analyses now show up on this page, so the full picture of past work is in one place.",
+        "technical": "Items added from the SQL in sql/metabase (troovy-analytics), dated by file creation; anything already listed as a win was left out."
+      }
+    }
+  ],
   "upcoming": [
     {
       "area": "engineering",
