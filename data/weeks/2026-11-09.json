@@ -99,6 +99,17 @@
       }
     },
     {
+      "section": "win",
+      "area": "engineering",
+      "date": "2026-11-12",
+      "title": "Budget tracker: requirements and questions shared with Finance",
+      "detail": "Two documents went to the Finance Head and the founders: a requirements and approach note (team budgets from Finance, planned spend logged by each team manager, approvals for anything over budget from the phone, PnL and cashflow effect shown before submitting), and a question sheet on how budgets, approvals and payments work today and which features Finance needs. Nothing gets built until Finance confirms what it needs.",
+      "explain": {
+        "simple": "Before building a budget tracker, we asked Finance how budgets work today and what they really need, so the tool fits their process instead of the other way round.",
+        "technical": "Requirements & Approach doc compares three build options (AppSheet, a Google Apps Script web app on a Finance-owned Google Sheet, our own server); recommended option: Apps Script web app (no extra cost, data stays in Finance's sheet). Questions doc: current process, pain points, features marked Must have / Nice to have / Not needed."
+      }
+    },
+    {
       "section": "adhoc",
       "area": "devops",
       "date": "2026-11-12",

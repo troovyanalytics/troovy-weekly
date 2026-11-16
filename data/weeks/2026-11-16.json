@@ -28,6 +28,17 @@
     },
     {
       "area": "engineering",
+      "when": "Fri 20 Nov",
+      "status": "waiting",
+      "title": "Budget tracker: Finance's answers, then the build plan",
+      "detail": "Once Finance answers the questions, the features and the way to build it get finalised.",
+      "explain": {
+        "simple": "Finance tells us what they need, and then we decide exactly what to build.",
+        "technical": "Answers to the Finance question sheet due 20 Nov; then lock the v1 feature list and the build option (recommended: Apps Script web app on a Finance-owned Google Sheet)."
+      }
+    },
+    {
+      "area": "engineering",
       "when": "Next",
       "status": "planned",
       "title": "TrooVault: updates before go-live",
