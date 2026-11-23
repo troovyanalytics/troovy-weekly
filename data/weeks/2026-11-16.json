@@ -147,6 +147,94 @@
       }
     },
     {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "Daily analytics brief for the team",
+      "detail": "A one-page brief on 18 Nov: orders up 24% on the 7-day average, chips running out while the biggest ad campaign was on chips, and a data issue that made the day look worse than it was. Each point had an owner and an action.",
+      "explain": {
+        "simple": "A short morning note on what happened yesterday and what each team should do about it today.",
+        "technical": "reporting.shopify_pnl_daily and category P&Ls vs the 7-day average; SKU days of cover (DRR vs good stock and in-transit) from the demand tables; Meta spend by campaign."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "Ad spend judged on Shopify sales, B2B separate",
+      "detail": "On 18 Nov Meta spend rose 24% and Shopify sales 23%, so every Rs 1 of ads still brought about Rs 1.97 of sales. Chips and Ketchup + Choco improved; Milk Mix spend rose 38% but new orders only 22% (cost per new order Rs 614 to Rs 691). Turned into talking points for the D2C director.",
+      "explain": {
+        "simple": "We checked ads against the sales that actually happened on our store, not what Meta claims. Ads paid back as usual; only Milk Mix got more expensive per new customer.",
+        "technical": "Meta spend vs Shopify sales by order date (cancelled and Rs 0 orders excluded); new-customer orders and spend per new order by category from the P&L spend split; B2B reported separately. Meta's own ROAS for Sauces (0.93) vs Shopify-based 1.74 showed why Meta's number can't be used."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "Ad spend on out-of-stock chips: which campaigns",
+      "detail": "About Rs 10-11k a day (around 3% of spend) went to VF Masala and Tangy Tomato chips while they were out of stock, mostly through catalogue ads. The main Chips campaign sells the Chips Combo 10, which had 2-3 weeks of stock, so it did not need pausing.",
+      "explain": {
+        "simple": "We found the ads that were still selling chips we didn't have, and showed that taking those chips out of the catalogue fixes most of it.",
+        "technical": "UTM (raw.gokwik_orders) campaign and ad set → orders containing VF_MASALA_40 / VF_TANGYTOMATO_40 via Uniware shipment SKUs, 14-18 Nov; spend apportioned by the share of orders with VF chips (~Rs 53k over 5 days)."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "What sells with VF chips",
+      "detail": "93% of 279 VF chips orders (14-18 Nov) also had other products, mostly 2-packs of other chips. Potato Chips Combo Pack 4 brought 50% new customers. So hiding VF while it is out of stock loses few orders.",
+      "explain": {
+        "simple": "People rarely buy VF chips alone; they add them to a mixed basket, so being out of stock costs us little.",
+        "technical": "Basket analysis on Shopify order lines: products bought together with VF, plus for each VF product the order count, new-customer share, AOV and COD share."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "18 Nov cancellations: why Shopify showed only Rs 15k",
+      "detail": "Order-ID file behind the Rs 1.80L the dashboard showed. Rs 1.64L of it was 207 orders cancelled months earlier, on which Shopify created Rs 0 refund records in bulk on 18 Nov. Checked that nothing was counted twice: these orders had never been reversed before, and cancellation cards still count them on their original dates. This led to the P&L fix listed above.",
+      "explain": {
+        "simple": "The big drop on 18 Nov wasn't real money going back. Old cancelled orders got a Rs 0 refund entry in one go. The real figure matches Shopify's Rs 15k, and no order was counted twice.",
+        "technical": "staging.refunds created 18 Nov 16:15-16:20 IST with total_refund_amount 0 on voided orders (Jun 2024 to Nov 2026). Group A: 207 orders, Rs 1,64,491. Group B: real refunds, Rs 9,065. Group C: cancelled the same day, Rs 6,241. B + C = Rs 15,306 = Shopify."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "Cancellations card: Repeat / Non-repeat tag",
+      "detail": "Card 120 (cancelled order details) gets a Repeat / Non-repeat column. For 1-19 Nov: 183 repeat-customer cancellations worth Rs 1.89L, against 198 first orders worth Rs 1.50L.",
+      "explain": {
+        "simple": "The cancellations list now shows whether the customer had ordered from us before.",
+        "technical": "Same rule as the P&L New/Repeat split (is_new_customer); it matched the P&L table for all 1,012 cancelled orders in the last 60 days. SQL in sql/metabase/120-cancellation-orders-details.sql, pasted into Metabase by hand."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "Repeat customers lost to non-serviceable pincodes",
+      "detail": "New card 251 shows, month by month, repeat customers' orders cancelled as non-serviceable (NSZ), with refunds. It rose from 13-30 a month before May to 80-190 after, peaking at 190 in July. Order-ID file of all 1,909 NSZ cancellations (884 repeat) with pincode, city and state, and no personal details. Manipur stands out: 128 repeat orders, 66 in pincode 795001.",
+      "explain": {
+        "simple": "More and more customers we delivered to before are now being told we can't deliver to them, since May. Manipur is the biggest cluster, which points to a change in courier coverage.",
+        "technical": "Cancel staff note and refund note matched with a regex covering NSZ, non-serviceable and typo variants; wrong-pincode cases left out. Card 251 in Our analytics / Customer delight; file NSZ_Cancelled_Orders_Last12M.xlsx (Dec 2025 to 19 Nov 2026)."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "Chips projection for the new Rs 100 packs",
+      "detail": "For a Rs 2 Cr month with 30% from chips (Rs 60L), we need 60,000 units a month (~2,000 a day) across the 4 new Rs 100 SKUs: Mix Veg 21,640, Ragi 13,530, Krunchies 12,440, Moong Dal 12,390. Chips are already ~41% of Shopify sales (~Rs 56L of Rs 1.35 Cr), so the stretch is in the other categories.",
+      "explain": {
+        "simple": "How many of each new Rs 100 chips pack we need to sell each month to hit the chips target.",
+        "technical": "Rs 60L / Rs 100, split by the last 30 days' flavour mix of Shopify chips packs, with combos broken into flavours via product_component. The Krunchies share is approximate because some bundle mappings are wrong (e.g. CHIPS_10PK maps to 13 packs). File Chips_Rs100_SKU_Projection_60L.xlsx."
+      }
+    },
+    {
       "section": "big",
       "area": "engineering",
       "date": "2026-11-20",
