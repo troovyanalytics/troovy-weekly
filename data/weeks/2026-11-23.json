@@ -1,0 +1,108 @@
+{
+  "start": "2026-11-23",
+  "end": "2026-11-29",
+  "headline": "This week: Tara's next steps, building our own customer app, and more demand history for planning",
+  "items": [
+    {
+      "section": "win",
+      "area": "data_science",
+      "date": "2026-11-23",
+      "title": "Demand history: Gurgaon B2C orders from October 2025",
+      "detail": "Orders from the old Gurgaon B2C warehouse (used until May 2026) now count as consumer demand, so planning sees Gurgaon demand for January to May too.",
+      "explain": {
+        "simple": "Months of Gurgaon online orders were not being counted in the demand numbers; now they are.",
+        "technical": "dbt var ops_b2c_sale_order_facilities + GUR_20_2 (facility name GUR_B2C, already mapped to Gurgaon); about 880k order items, Oct 2025 to May 2026. PR #47, live 23 Nov."
+      }
+    }
+  ],
+  "upcoming": [
+    {
+      "area": "engineering",
+      "when": "Wed 26 Nov",
+      "status": "in progress",
+      "title": "Tara: next steps",
+      "detail": "Getting the new project ready to go live.",
+      "explain": {
+        "simple": "Finishing touches on the new project. Details at launch.",
+        "technical": "Final checks and hosting on AWS."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "Thu 10 Dec",
+      "status": "in progress",
+      "title": "Own Troovy customer app",
+      "detail": "Next: connect the screens to our Shopify store, then the store side of the app, then testing and the store listing switch.",
+      "explain": {
+        "simple": "Turning the clickable app into a real shopping app on our own store.",
+        "technical": "Shopify Storefront API (Headless channel), app database for points and check-ins, EAS builds; listing transfer after our Apple/Google accounts are ready."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "This week",
+      "status": "in progress",
+      "title": "Secondary sales automation by Sajid: review and go-live",
+      "detail": "The Blinkit GRN data is live; Sajid's data models on top of it get reviewed and released next.",
+      "explain": {
+        "simple": "Checking Sajid's next part together and putting it live.",
+        "technical": "dbt models (Blinkit PO lines, SKU-level PO lifecycle and journey) via a troovy-analytics PR, reviewed before release."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "Next",
+      "status": "waiting",
+      "title": "Budget tracker: Finance's answers, then the build plan",
+      "detail": "Once Finance answers the questions, the features and the way to build it get finalised.",
+      "explain": {
+        "simple": "Finance tells us what they need, and then we decide exactly what to build.",
+        "technical": "Lock the v1 feature list and the build option (recommended: Apps Script web app on a Finance-owned Google Sheet)."
+      }
+    },
+    {
+      "area": "engineering",
+      "when": "Next",
+      "status": "planned",
+      "title": "TrooVault: go-live",
+      "detail": "Security updates are done; remaining: security settings and hosting so the team can use it.",
+      "explain": {
+        "simple": "Final checks before the costing app is opened to the team.",
+        "technical": "Security headers, rate limits on login and unlock, longer passphrases; then hosting on AWS."
+      }
+    },
+    {
+      "area": "devops",
+      "when": "Planned",
+      "status": "planned",
+      "title": "Lighter load on the database",
+      "detail": "Fewer unchanged rows rewritten on each refresh, so the database does less work and backups cost less.",
+      "explain": {
+        "simple": "Only save what actually changed, instead of rewriting everything every time.",
+        "technical": "Skip-unchanged guards in dbt merges, inventory and sheet tables loaded only when changed, incremental ops report orders."
+      }
+    },
+    {
+      "area": "analytics",
+      "when": "Planned",
+      "status": "planned",
+      "title": "Calls next to chats in the complaints dashboard",
+      "detail": "Now that Ozonetel calls arrive, show calls and chats together in one complaints view.",
+      "explain": {
+        "simple": "One place to see every customer complaint, whether it came by chat or by phone.",
+        "technical": "Add an Ozonetel calls block to the complaints card, same columns as the KwikEngage tickets."
+      }
+    },
+    {
+      "area": "analytics",
+      "when": "Planned",
+      "status": "planned",
+      "title": "Demand dashboard: lost sales, forecast accuracy, KPI tiles",
+      "detail": "The next cards on the planning dashboard after Plan vs Stock.",
+      "explain": {
+        "simple": "New cards that show sales missed because of stock-outs, how close past forecasts were, and headline numbers at a glance.",
+        "technical": "Next Metabase cards on dashboard 12: lost-sales estimate, forecast vs actual accuracy, KPI tiles."
+      }
+    }
+  ]
+}

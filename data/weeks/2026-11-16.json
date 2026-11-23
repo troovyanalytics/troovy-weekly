@@ -1,7 +1,7 @@
 {
   "start": "2026-11-16",
   "end": "2026-11-22",
-  "headline": "This week: our own customer app, and taking Sajid's secondary sales automation live",
+  "headline": "This week: safer database with off-site backups, our own customer app and a new project (Tara) started, and two new data feeds by Sajid",
   "items": [
     {
       "section": "big",
@@ -15,6 +15,17 @@
       }
     },
     {
+      "section": "big",
+      "area": "devops",
+      "date": "2026-11-16",
+      "title": "Weekly database backup copied to a second region",
+      "detail": "Every Sunday night a full copy of the database is made and sent to AWS Singapore, kept for 14 days, on top of the daily backups in Mumbai. The first copy arrived on 23 Nov.",
+      "explain": {
+        "simple": "If something ever went wrong with the whole Mumbai data centre, we still have a recent copy of all our data in another country.",
+        "technical": "AWS Backup plan (cron Sun 21:00 UTC) on the RDS instance, Mumbai vault 1 day, copy to a Singapore vault 14 days; RDS automated backups stay daily with point-in-time restore (retention 3 days). First copy 2026-11-23 03:03 IST: encrypted snapshot available in ap-southeast-1."
+      }
+    },
+    {
       "section": "win",
       "area": "devops",
       "date": "2026-11-16",
@@ -23,6 +34,39 @@
       "explain": {
         "simple": "Only the people who need customers' personal details can see them, and everyone else's access no longer breaks after each data refresh.",
         "technical": "dbt +grants now lists all three reader roles; apply_grants had been revoking pii_reader/analyst_safe on ~30 staging/reporting tables (e.g. staging.orders) at every rebuild (PRs #41, #42)."
+      }
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "date": "2026-11-16",
+      "title": "Database activity logs and safety locks",
+      "detail": "The database now records logins, structure changes and slow queries, and key settings (backups, audit logs) are locked so they can't be switched off by mistake.",
+      "explain": {
+        "simple": "We can now see who connected and what changed, and the most important safety settings can't be turned off by accident.",
+        "technical": "Custom RDS parameter group (log_connections/disconnections, log_statement=ddl, slow-query and lock-wait logs) exported to CloudWatch (90 days); IAM deny guardrails on delete/stop actions for backups, logs and audit trail. Applied with one short restart in office hours, no pipeline failed."
+      }
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "date": "2026-11-16",
+      "title": "Database passwords renewed",
+      "detail": "The shared pipeline password and the admin password were changed. Every pipeline picked up the new password automatically, with no failed run.",
+      "explain": {
+        "simple": "Like changing the locks on a building: done regularly, and nobody got locked out.",
+        "technical": "New values in Secrets Manager (pipelines read SECRETS_IDS at start) and Terraform random_password for the admin role; health check after the change: all pipelines SUCCESS."
+      }
+    },
+    {
+      "section": "win",
+      "area": "devops",
+      "date": "2026-11-16",
+      "title": "About 11 GB a day less written to the database log",
+      "detail": "Reporting tables are rebuilt every hour from other tables, so they no longer go into the database's change log. That cuts backup storage and load on the database.",
+      "explain": {
+        "simple": "These tables can always be rebuilt in minutes, so there is no need to keep a backup trail of every rebuild.",
+        "technical": "dbt reporting models materialised UNLOGGED (31 of 32; demand_forecast_snapshot stays logged because it keeps history). After a restore, the reporting tables are rebuilt by the next dbt run."
       }
     },
     {
@@ -45,6 +89,127 @@
       "explain": {
         "simple": "Earlier one-off analyses now show up on this page, so the full picture of past work is in one place.",
         "technical": "Items added from the SQL in sql/metabase (troovy-analytics), dated by file creation; anything already listed as a win was left out."
+      }
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "date": "2026-11-18",
+      "title": "Courier returns (RTO) data, built by Sajid",
+      "detail": "Sajid's new feed brings Unicommerce courier returns into the database every day: 25,114 return packages and 151,954 returned items loaded from history, for all six B2C warehouses.",
+      "explain": {
+        "simple": "We can now see every parcel that came back from the courier, and what was inside it, without downloading reports by hand.",
+        "technical": "uniware-sync PR #18: Courier Returns + Courier Return Itemwise exports -> raw.uniware_courier_returns / _items (migration e4c8a1f7d902). Reviewed (code, personal data, access), released, one-off history load; safe views for Metabase created automatically."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "engineering",
+      "date": "2026-11-18",
+      "title": "TrooVault: security updates",
+      "detail": "The costing app's web framework and login library were updated to their latest safe versions.",
+      "explain": {
+        "simple": "Routine safety updates for the costing app before the team starts using it.",
+        "technical": "next 15.5.4 -> 15.5.29, next-auth beta.25 -> beta.32, image optimizer off."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "devops",
+      "date": "2026-11-18",
+      "title": "Platform flow diagram for the team",
+      "detail": "A clickable diagram of how data flows from each source to the dashboards, how releases work, and the 24-hour schedule of every job.",
+      "explain": {
+        "simple": "One picture that shows where every number on the dashboards comes from and when it refreshes.",
+        "technical": "infrastructure/docs/platform-flow.html, times checked against fargate.tf."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "devops",
+      "date": "2026-11-18",
+      "title": "Pipeline health checks",
+      "detail": "All pipelines checked over 48 hours on 18 Nov and again on 20 Nov: every one healthy; the few one-off errors from outside services had already recovered on their own.",
+      "explain": {
+        "simple": "A regular check-up that everything is running.",
+        "technical": "Run status in ops.*_sync_runs across all pipelines; Unicommerce export timeouts and one Google API 503 self-recovered on the next run."
+      }
+    },
+    {
+      "section": "adhoc",
+      "area": "analytics",
+      "date": "2026-11-19",
+      "title": "GoKwik data check",
+      "detail": "Checked a report that GoKwik data had stopped: the daily sync runs fine, and the GoKwik report itself now covers up to the previous day.",
+      "explain": {
+        "simple": "The data wasn't missing; the report it comes from just changed how many days it includes.",
+        "technical": "raw.gokwik_orders: the 18 Nov mail covered 19 Oct to 18 Nov; next run brought data after 18 Nov 15:00 (verified 20 Nov)."
+      }
+    },
+    {
+      "section": "big",
+      "area": "engineering",
+      "date": "2026-11-20",
+      "title": "Our own customer app: first screens running",
+      "detail": "The new Troovy app runs on a phone with its first screens built from the Figma designs: Home, Shop, Rewards, profile, order history and sign-up, plus the daily check-in and levels logic.",
+      "explain": {
+        "simple": "The first working version of our own app: you can tap through the main screens and the points and levels already work.",
+        "technical": "Expo (React Native) app; rules engine for levels, check-ins and free misses; screens from the D2C Figma files with shared state. Same store IDs as today's app, so it can ship as an update."
+      }
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "date": "2026-11-20",
+      "title": "Tara: new project started",
+      "detail": "Work has started on Tara, a new customer-facing project with the product team. More at launch.",
+      "explain": {
+        "simple": "Something new for our customers is being built. Details when it goes live.",
+        "technical": "Separate repo; first versions merged and security-checked. Details at launch."
+      }
+    },
+    {
+      "section": "win",
+      "area": "engineering",
+      "date": "2026-11-20",
+      "title": "Blinkit SKU-wise GRN data, by Sajid",
+      "detail": "Blinkit's SKU-wise goods-received sheet now loads every day with the other platform PO sheets (45,313 rows).",
+      "explain": {
+        "simple": "What Blinkit actually received, item by item, is now in the database every morning.",
+        "technical": "uniware-sync PR #21: new tab PO Sheet/Blinkit_PO_GRN in platform_po_sheet -> raw.sheet_mappings; first daily load 21 Nov. Sajid's dbt models on top of it come next."
+      }
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "date": "2026-11-20",
+      "title": "PO value now matches the invoice basis",
+      "detail": "In the PO lifecycle table the PO value is now the sum of Uniware's line totals, the same basis the fill-rate dashboard already uses.",
+      "explain": {
+        "simple": "PO values now add up the same way everywhere.",
+        "technical": "staging.fct_po_lifecycle: po_value = sum(selling_price) (Uniware's selling_price is already the line total; matches b2b_po_fill_rate). PR #46, live from the 21 Nov run; no dashboard card read the old column."
+      }
+    },
+    {
+      "section": "win",
+      "area": "analytics",
+      "date": "2026-11-20",
+      "title": "P&L: zero-rupee refunds no longer counted as reversals",
+      "detail": "Zero-rupee refunds that Shopify creates after an order was already cancelled are no longer counted again as sales reversals in the daily P&L. 18 Nov now shows the right number.",
+      "explain": {
+        "simple": "A bulk action on Shopify made empty refund entries; the P&L now ignores them so the day's numbers are right.",
+        "technical": "reporting P&L reversals skip Rs 0 refunds created more than 1 hour after the cancellation (PR #45); verified 18 Nov after the 14:25 run, other days unchanged."
+      }
+    },
+    {
+      "section": "win",
+      "area": "data_science",
+      "date": "2026-11-20",
+      "title": "Demand history: Jan to Mar B2B invoices loaded",
+      "detail": "B2B invoices for January to March 2026 are now in the database (11,266 invoice lines), so demand planning has B2B history from 1 January instead of 1 April.",
+      "explain": {
+        "simple": "The demand forecast can now learn from three more months of B2B sales.",
+        "technical": "One-off Fargate runs of uniware-sync --pipeline invoices_b2b, one month each (replace by invoice, safe to re-run): Jan 2,670 / Feb 3,939 / Mar 4,657 lines, old facilities included."
       }
     }
   ],
